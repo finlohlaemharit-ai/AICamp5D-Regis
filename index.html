@@ -7,8 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    /* ... (CSS ส่วนเดิมทั้งหมด เหมือนฉบับล่าสุดของคุณ) ... */
-    /* คงไว้เหมือนเดิมเพื่อความสวยงามตามที่คุณต้องการ */
+    /* CSS เดิมทั้งหมดของคุณ */
     body { font-family: "Prompt", sans-serif; background: #F0F6FF; color: #003B8E; margin: 0; padding-bottom: 40px; }
     .container { max-width: 550px; margin: auto; padding: 20px; box-sizing: border-box; }
     .banner { width: 100%; border-radius: 16px; overflow: hidden; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,59,142,0.2); background: linear-gradient(135deg, #00C6FF, #0072FF); color: white; text-align: center; padding: 40px 20px; box-sizing: border-box; }
@@ -150,24 +149,17 @@
   </div>
 
   <script>
-    // ⚠️ สำคัญมาก: เปลี่ยนตรงนี้เป็น URL ของ Web App ที่คุณ Deploy แล้ว (ต้องลงท้ายด้วย /exec)
+    // ⚠️ ตรวจสอบ URL ให้ถูกต้อง (Deploy as Web App)
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwS3HFz65lBCo9llQJV6Wv-ySvfaYLHECX6v1qswQAHjAtpCsIyGYO_gYQ2uoIEMmB3lw/exec";
 
     let selectedData = { day: "", time: "" };
 
     window.onload = function() {
-      // ใช้ Fetch แทน google.script.run
       fetch(WEB_APP_URL + "?action=getStats")
         .then(res => res.json())
         .then(renderStats)
         .catch(err => console.warn("Cannot load stats:", err));
     };
-
-    function onFailure(error) {
-      document.getElementById('loading').style.display = 'none';
-      alert("เกิดข้อผิดพลาดในการเชื่อมต่อ Server: " + error.message);
-      console.error(error);
-    }
 
     function renderStats(stats) {
       if (!stats) return;
@@ -241,27 +233,35 @@
 
       document.getElementById('loading').style.display = 'flex';
       
-      // ส่งข้อมูลด้วย fetch (Universal)
       fetch(WEB_APP_URL, {
         method: 'POST',
         body: JSON.stringify({ action: 'register', form: form }),
       })
       .then(res => res.json())
       .then(res => {
-        // Redirect ไปยังหน้า Payment ของ GAS Web App เพื่อให้ระบบ Flow ต่อได้ง่าย
-        // (เนื่องจาก GitHub ไม่มีหน้า payment.html ที่เป็น Dynamic เหมือน GAS)
-        // หรือถ้าอยากให้ Redirect ไปหน้า payment.html บน GitHub ก็ได้ แต่ต้องเขียน payment.html ใหม่ให้เป็นแบบ Universal ด้วย
         
-        // ในที่นี้ เพื่อความง่ายและชัวร์ ให้วิ่งไปหา GAS Web App ในหน้า Payment
+        // CASE 1: จ่ายแล้ว
         if(res.status === "ALREADY_PAID") {
+           alert("✅ เบอร์โทรนี้ชำระเงินเรียบร้อยแล้ว\nระบบจะพาคุณไปยังหน้าเข้ากลุ่มทันที");
            window.location.href = WEB_APP_URL + "?page=success"; 
-        } else {
+        } 
+        // CASE 2: อัปเดตข้อมูล (ยังไม่จ่าย) หรือ สมัครใหม่
+        else if (res.status === "UPDATE_PENDING") {
+           alert("ℹ️ พบข้อมูลเดิมแต่ยังไม่ได้ชำระเงิน\nระบบได้อัปเดตข้อมูลใหม่ให้แล้ว กรุณาชำระเงินในหน้าถัดไป");
            window.location.href = WEB_APP_URL + "?page=payment&rowid=" + res.rowid + "&price=" + res.price;
+        } 
+        else if (res.status === "NEW") {
+           // กรณีสมัครใหม่ ปกติ
+           window.location.href = WEB_APP_URL + "?page=payment&rowid=" + res.rowid + "&price=" + res.price;
+        }
+        else {
+           alert("เกิดข้อผิดพลาด: " + (res.message || "Unknown error"));
+           document.getElementById('loading').style.display = 'none';
         }
       })
       .catch(err => {
         document.getElementById('loading').style.display = 'none';
-        alert("เกิดข้อผิดพลาด: " + err.message);
+        alert("เกิดข้อผิดพลาดในการเชื่อมต่อ: " + err.message);
       });
     }
   </script>
