@@ -162,18 +162,23 @@
   </div>
 
   <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxTHUd7SIINN6vbVUJMEeDCv6Xpad-H_eIRIOTPvuPpYITa_CLHazAfXAmb8ORNbF-9nQ/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbycI4S8F3f82NZUZmPuShmPHM5csX2VN_QiCIbDEB080AYv7K8gOqWEdqBHmMRqWfboig/exec";
 
     const params = new URLSearchParams(window.location.search);
     const rowid = params.get('rowid');
-    const userPrice = params.get('price'); // ราคาที่ user คนนี้ได้สิทธิ์
+    const userPrice = params.get('price'); 
     
     window.onload = function() {
-      // ถ้าไม่มี RowID ให้เตือนและเด้งกลับ
-      if (!rowid) {
-        alert("ไม่พบข้อมูลการลงทะเบียน กรุณาลงทะเบียนใหม่");
-        window.location.href = WEB_APP_URL + "?page=index";
-        return;
+      // แก้ไข: ไม่ให้เด้งกลับทันทีถ้าไม่เจอ แต่ให้แสดง Alert เตือนก่อน
+      if (!rowid || rowid === "undefined" || rowid === "null") {
+        // ลองพยายามหา rowid จาก URL อีกครั้ง (เผื่อกรณี URL เพี้ยน)
+        const urlStr = window.location.href;
+        const match = urlStr.match(/rowid=([^&]+)/);
+        if(!match) {
+            alert("⚠️ ไม่พบข้อมูลการลงทะเบียน (RowID Missing)\nกรุณาลองลงทะเบียนใหม่อีกครั้ง หรือติดต่อแอดมิน");
+            window.location.href = WEB_APP_URL.split('?')[0] + "?page=index";
+            return;
+        }
       }
 
       fetch(WEB_APP_URL + "?action=getConfig")
@@ -185,9 +190,8 @@
     function updatePricingUI(data) {
       if (!data) return;
       const paid = data.paidCount;
-      const cfg = data.config; // ตอนนี้มี config แล้วจาก Code.gs ที่แก้ใหม่
+      const cfg = data.config; 
 
-      // แสดงราคาใน Tier List
       document.getElementById('price-super').innerText = cfg.priceSuper.toLocaleString() + ".-";
       document.getElementById('price-early').innerText = cfg.priceEarly.toLocaleString() + ".-";
       document.getElementById('price-normal').innerText = cfg.priceNormal.toLocaleString() + ".-";
@@ -196,16 +200,13 @@
       const tEarly = document.getElementById('tier-early');
       const tNormal = document.getElementById('tier-normal');
       
-      // Reset Class
       [tSuper, tEarly, tNormal].forEach(el => el.className = 'tier-item future');
 
-      // Logic Highlight Tier (Global Status)
-      // แค่โชว์ให้เห็นว่าตอนนี้คนอื่นเขาจ่ายกันราคาไหน
       if (paid < cfg.superLimit) {
         tSuper.className = 'tier-item active';
         const left = cfg.superLimit - paid;
         tSuper.querySelector('span:first-child').innerHTML += ` <span class="badge-stock">🔥 เหลือ ${left} สิทธิ์</span>`;
-      } else if (paid < (cfg.earlyLimit)) { // 45
+      } else if (paid < (cfg.earlyLimit)) { 
         tSuper.className = 'tier-item sold-out';
         tSuper.querySelector('span:first-child').innerHTML += ` <span class="badge-sold">SOLD OUT</span>`;
         tEarly.className = 'tier-item active';
@@ -219,13 +220,9 @@
         tNormal.className = 'tier-item active';
       }
 
-      // *** IMPORTANT: Show User's Specific Price ***
-      // ใช้ราคาที่ส่งมาจากหน้าลงทะเบียน เพราะคือราคาที่สิทธิ์ของเขาล็อคไว้
-      // ถ้าไม่มีส่งมา (กรณี refresh) ให้ลองใช้ราคา default หรือ logic เดิม
-      if (userPrice) {
+      if (userPrice && userPrice !== "undefined") {
         document.getElementById('showPrice').innerText = Number(userPrice).toLocaleString();
       } else {
-        // Fallback (ถ้าหาไม่เจอจริงๆ)
         document.getElementById('showPrice').innerText = "...";
       }
     }
@@ -263,18 +260,27 @@
       reader.onload = function(e) {
         const base64 = e.target.result.split(',')[1];
         
+        // ใช้ rowid จากตัวแปร global ที่ดึงมาจาก params หรือ match
+        let finalRowId = rowid;
+        if (!finalRowId || finalRowId === "undefined") {
+             const match = window.location.href.match(/rowid=([^&]+)/);
+             if(match) finalRowId = match[1];
+        }
+
         fetch(WEB_APP_URL, {
           method: 'POST',
           body: JSON.stringify({ 
             action: 'uploadSlip', 
-            rowid: rowid, // ส่ง RowID ที่ได้จาก URL
+            rowid: finalRowId, 
             base64: base64 
           })
         })
         .then(res => res.json())
         .then(res => {
           if(res.status === 'success') {
-            window.location.href = WEB_APP_URL + "?page=success";
+            // ล้าง URL ก่อนไปหน้า Success
+            let cleanUrl = WEB_APP_URL.split('?')[0];
+            window.location.href = cleanUrl + "?page=success";
           } else {
             alert("เกิดข้อผิดพลาด: " + res.message);
             document.getElementById('loading').style.display = 'none';
