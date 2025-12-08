@@ -3,47 +3,139 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ลงทะเบียนคอร์สทำคอนเทนต์ + ใช้ AI</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>AI Content Bootcamp ลงทะเบียน</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 body {
+  margin: 0;
   font-family: "Prompt", sans-serif;
-  background: #f5f8ff;
-  padding: 20px;
+  background: #f2f7ff;
+  color: #003B8E;
 }
+
 .container {
   max-width: 480px;
   margin: auto;
-  background: white;
-  padding: 22px;
-  border-radius: 14px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.08);
+  padding: 20px;
 }
+
+/* Header Banner */
+.banner-box {
+  width: 100%;
+  height: 160px;
+  border-radius: 14px;
+  background: linear-gradient(to bottom right, #00C6FF, #0072FF);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 80px;
+  margin-bottom: 6px;
+}
+
 h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
   text-align: center;
   color: #003B8E;
 }
-input, button {
-  width: 100%;
-  padding: 12px;
-  margin: 8px 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+
+.subtitle {
+  text-align: center;
+  margin-top: 4px;
   font-size: 15px;
+  color: #555;
 }
-button {
+
+/* Section titles */
+.section-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
+/* Agenda */
+.agenda-box {
+  background: white;
+  padding: 15px;
+  border-radius: 14px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.06);
+  margin-bottom: 20px;
+}
+
+/* Buttons */
+.choice-btn {
+  width: 100%;
+  padding: 14px;
+  margin: 6px 0;
+  border-radius: 10px;
+  border: 2px solid #003B8E;
+  background: white;
+  color: #003B8E;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.choice-btn.active {
   background: #003B8E;
   color: white;
+}
+
+/* Form Inputs */
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin: 7px 0;
+  border-radius: 10px;
+  border: 1px solid #bbb;
+  font-size: 15px;
+}
+
+/* Submit button */
+.next-btn {
+  width: 100%;
+  margin-top: 15px;
+  background: #0072FF;
+  color: white;
+  padding: 16px;
+  font-size: 17px;
   border: none;
+  border-radius: 12px;
+  font-weight: 700;
   cursor: pointer;
 }
-.success-box {
-  display: none;
-  text-align: center;
-  padding: 20px;
+
+.stats-box {
+  margin-top: 10px;
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 14px;
+  box-shadow: 0px 0px 8px rgba(0,0,0,0.06);
+}
+.stats-item {
+  margin-bottom: 10px;
+}
+.bar {
+  height: 10px;
+  border-radius: 6px;
+  background: #d9e6ff;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  background: #003B8E;
+  width: 0%;
 }
 </style>
 </head>
@@ -51,73 +143,150 @@ button {
 <body>
 <div class="container">
 
-  <h2>ลงทะเบียนคอร์สทำคอนเทนต์ + ใช้ AI</h2>
-
-  <div id="formBox">
-    <input type="text" id="fullname" placeholder="ชื่อ - นามสกุล" required />
-    <input type="text" id="phone" placeholder="เบอร์โทร" required />
-    <input type="email" id="email" placeholder="อีเมล" required />
-    <input type="text" id="lineid" placeholder="LINE ID (ถ้ามี)" />
-
-    <label>แนบสลิปการชำระเงิน</label>
-    <input type="file" id="slip" accept="image/*" required />
-
-    <button onclick="submitForm()">ส่งข้อมูลลงทะเบียน</button>
+  <!-- Banner -->
+  <div class="banner-box">
+    <div>
+      <img src="https://lh5.googleusercontent.com/d/1PPk9KMzLWqMK7KLfG46oES5k5Fzy6oll" class="logo" />
+      <div>AI Content Bootcamp (5 Days)</div>
+    </div>
   </div>
 
-  <div id="successBox" class="success-box">
-    <h3>ลงทะเบียนสำเร็จ! 💙</h3>
-    <p>ขอบคุณที่สมัครคอร์สครับ</p>
-    <a href="https://line.me/ti/g/fmMXxuHaw-">
-      <button style="background:#06C755;">เข้ากลุ่มไลน์เรียนทันที</button>
-    </a>
+  <h2>ลงทะเบียนเรียนคอร์ส</h2>
+  <div class="subtitle">เรียนจริง 5 วัน | ใช้ได้ทั้ง Facebook • DO • LINE OA</div>
+
+  <!-- Platforms -->
+  <div class="section-title">แพลตฟอร์มที่ใช้เรียน</div>
+  <div class="agenda-box">
+    Canva • CapCut • Keynote • Numbers <br>
+    ChatGPT • Gemini <br>
+    Facebook • Digital Office • LINE OA
   </div>
+
+  <!-- Agenda -->
+  <div class="section-title">Agenda (5 วัน)</div>
+  <div class="agenda-box">
+    ✔ เทคนิคทำคอนเทนต์ทุกแบบ (ภาพ/โพสต์/คลิป) <br>
+    ✔ ฝึกใช้งาน ChatGPT + Gemini <br>
+    ✔ ฝึก Canva + CapCut <br>
+    ✔ DO + Facebook Content Flow <br>
+    ✔ สร้างไฟล์เสนอขายด้วย Numbers <br>
+    ✔ ปิดท้ายสรุปการทำงานแบบมืออาชีพ
+  </div>
+
+  <!-- Day Selection -->
+  <div class="section-title">เลือกวันเรียน</div>
+
+  <button class="choice-btn" id="dayA" onclick="selectDay('A')">
+    A) 8–12 มกราคม 2568
+  </button>
+  <button class="choice-btn" id="dayB" onclick="selectDay('B')">
+    B) 13–17 มกราคม 2568
+  </button>
+
+  <!-- Time Selection -->
+  <div class="section-title">เลือกเวลาเรียน</div>
+
+  <button class="choice-btn" id="time1" onclick="selectTime('19:00-21:00')">
+    19:00 – 21:00 น.
+  </button>
+  <button class="choice-btn" id="time2" onclick="selectTime('20:00-22:00')">
+    20:00 – 22:00 น.
+  </button>
+
+  <!-- Stats -->
+  <div class="section-title">สถิติการลงทะเบียน</div>
+  <div class="stats-box" id="statsBox">
+    <div class="stats-item">
+      วัน A
+      <div class="bar"><div class="bar-fill" id="barA"></div></div>
+    </div>
+    <div class="stats-item">
+      วัน B
+      <div class="bar"><div class="bar-fill" id="barB"></div></div>
+    </div>
+    <div class="stats-item">
+      เวลา 19–21
+      <div class="bar"><div class="bar-fill" id="barT1"></div></div>
+    </div>
+    <div class="stats-item">
+      เวลา 20–22
+      <div class="bar"><div class="bar-fill" id="barT2"></div></div>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="section-title">ข้อมูลผู้สมัคร</div>
+
+  <input id="fullname" type="text" placeholder="ชื่อ - นามสกุล">
+  <input id="phone" type="number" placeholder="เบอร์โทร">
+  <input id="email" type="email" placeholder="อีเมล">
+  <input id="lineid" type="text" placeholder="LINE ID">
+  <input id="branch" type="text" placeholder="สาขา">
+
+  <select id="position">
+    <option value="">เลือกตำแหน่ง</option>
+    <option>ตัวแทน</option>
+    <option>ผู้บริหารหน่วย</option>
+    <option>ผู้บริหารศูนย์</option>
+    <option>ผู้จัดการศูนย์</option>
+    <option>ผู้บริหารภาค</option>
+    <option>ผู้จัดการภาค</option>
+    <option>ผู้จัดการภาคอาวุโส</option>
+    <option>ผู้จัดการฝ่าย</option>
+    <option>อื่นๆ</option>
+  </select>
+
+  <button class="next-btn" onclick="submitForm()">ไปชำระเงิน</button>
 
 </div>
 
-
 <script>
-function submitForm() {
-  const fullname = document.getElementById("fullname").value;
-  const phone = document.getElementById("phone").value;
-  const email = document.getElementById("email").value;
-  const lineid = document.getElementById("lineid").value;
-  const slipFile = document.getElementById("slip").files[0];
+let selectedDay = "";
+let selectedTime = "";
 
-  if (!fullname || !phone || !email || !slipFile) {
-    alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+// Select Day
+function selectDay(day) {
+  selectedDay = day;
+  document.getElementById("dayA").classList.remove("active");
+  document.getElementById("dayB").classList.remove("active");
+  if (day === "A") document.getElementById("dayA").classList.add("active");
+  else document.getElementById("dayB").classList.add("active");
+}
+
+// Select Time
+function selectTime(time) {
+  selectedTime = time;
+  document.getElementById("time1").classList.remove("active");
+  document.getElementById("time2").classList.remove("active");
+  if (time.includes("19")) document.getElementById("time1").classList.add("active");
+  else document.getElementById("time2").classList.add("active");
+}
+
+// Submit
+function submitForm() {
+  const data = {
+    fullname: fullname.value,
+    phone: phone.value,
+    email: email.value,
+    lineid: lineid.value,
+    branch: branch.value,
+    position: position.value,
+    day: selectedDay,
+    time: selectedTime
+  };
+
+  if (!data.fullname || !data.phone || !data.email || !data.day || !data.time) {
+    alert("กรุณากรอกข้อมูลให้ครบ");
     return;
   }
 
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const base64Slip = e.target.result.split(",")[1];
-
-    const payload = {
-      fullname,
-      phone,
-      email,
-      lineid,
-      slip: base64Slip
-    };
-
-    fetch("https://script.google.com/macros/s/AKfycbwRkD61b9PKrrwam1pHbIUKIs04D26ZpULyDZS4ylvw83KwlBzSBy5AJlVtuk8vtXLqaw/exec", {   // <<<<<<<< ใส่ URL Web App Deployment ที่นี่
-      method: "POST",
-      body: new URLSearchParams(payload),
+  google.script.run
+    .withSuccessHandler(function(res) {
+      window.location.href = "?page=payment&rowid=" + res.rowid + "&price=" + res.price;
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.status === "success") {
-        document.getElementById("formBox").style.display = "none";
-        document.getElementById("successBox").style.display = "block";
-      } else {
-        alert("เกิดข้อผิดพลาด กรุณาลองใหม่");
-      }
-    });
-  };
-
-  reader.readAsDataURL(slipFile);
+    .registerUser(data);
 }
 </script>
+
 </body>
 </html>
