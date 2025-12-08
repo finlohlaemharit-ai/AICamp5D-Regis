@@ -150,14 +150,17 @@
   </div>
 
   <script>
+    // ⚠️ สำคัญมาก: เปลี่ยนตรงนี้เป็น URL ของ Web App ที่คุณ Deploy แล้ว (ต้องลงท้ายด้วย /exec)
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyf2tO4qkGRE1iE5bjgSmtA0R-jIkfpeW9cLH5fmde38MEFUIPMss3pWtIgn7vdeq3Zrg/exec";
+
     let selectedData = { day: "", time: "" };
 
     window.onload = function() {
-      // เรียกฟังก์ชันจาก GAS (Production Only)
-      google.script.run
-        .withSuccessHandler(renderStats)
-        .withFailureHandler(onFailure) // ดัก Error ตรงนี้!
-        .getStats();
+      // ใช้ Fetch แทน google.script.run
+      fetch(WEB_APP_URL + "?action=getStats")
+        .then(res => res.json())
+        .then(renderStats)
+        .catch(err => console.warn("Cannot load stats:", err));
     };
 
     function onFailure(error) {
@@ -238,14 +241,28 @@
 
       document.getElementById('loading').style.display = 'flex';
       
-      // เรียก GAS พร้อม Failure Handler เพื่อแก้ปัญหาหน้าเว็บหมุนค้าง
-      google.script.run
-        .withSuccessHandler(function(res) {
-          if(res.status === "ALREADY_PAID") window.location.href = "?page=success"; 
-          else window.location.href = "?page=payment&rowid=" + res.rowid + "&price=" + res.price;
-        })
-        .withFailureHandler(onFailure) // สำคัญมาก!
-        .registerUser(form);
+      // ส่งข้อมูลด้วย fetch (Universal)
+      fetch(WEB_APP_URL, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'register', form: form }),
+      })
+      .then(res => res.json())
+      .then(res => {
+        // Redirect ไปยังหน้า Payment ของ GAS Web App เพื่อให้ระบบ Flow ต่อได้ง่าย
+        // (เนื่องจาก GitHub ไม่มีหน้า payment.html ที่เป็น Dynamic เหมือน GAS)
+        // หรือถ้าอยากให้ Redirect ไปหน้า payment.html บน GitHub ก็ได้ แต่ต้องเขียน payment.html ใหม่ให้เป็นแบบ Universal ด้วย
+        
+        // ในที่นี้ เพื่อความง่ายและชัวร์ ให้วิ่งไปหา GAS Web App ในหน้า Payment
+        if(res.status === "ALREADY_PAID") {
+           window.location.href = WEB_APP_URL + "?page=success"; 
+        } else {
+           window.location.href = WEB_APP_URL + "?page=payment&rowid=" + res.rowid + "&price=" + res.price;
+        }
+      })
+      .catch(err => {
+        document.getElementById('loading').style.display = 'none';
+        alert("เกิดข้อผิดพลาด: " + err.message);
+      });
     }
   </script>
 </body>
