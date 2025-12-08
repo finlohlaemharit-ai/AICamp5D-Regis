@@ -162,32 +162,37 @@
   </div>
 
   <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbycI4S8F3f82NZUZmPuShmPHM5csX2VN_QiCIbDEB080AYv7K8gOqWEdqBHmMRqWfboig/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxF05osbY7_YmN1TDD_LxShhLXG94XSKXePRNo0JltzWbfFpfsNBQVT97EhtAoOOvdolg/exec";
 
-    const params = new URLSearchParams(window.location.search);
-    const rowid = params.get('rowid');
-    const userPrice = params.get('price'); 
-    
+    // เปลี่ยนมาใช้ตัวแปร global เพื่อเก็บค่า rowid ที่ได้จาก google.script.url
+    let currentRowID = null;
+
     window.onload = function() {
-      // แก้ไข: ไม่ให้เด้งกลับทันทีถ้าไม่เจอ แต่ให้แสดง Alert เตือนก่อน
-      if (!rowid || rowid === "undefined" || rowid === "null") {
-        // ลองพยายามหา rowid จาก URL อีกครั้ง (เผื่อกรณี URL เพี้ยน)
-        const urlStr = window.location.href;
-        const match = urlStr.match(/rowid=([^&]+)/);
-        if(!match) {
-            alert("⚠️ ไม่พบข้อมูลการลงทะเบียน (RowID Missing)\nกรุณาลองลงทะเบียนใหม่อีกครั้ง หรือติดต่อแอดมิน");
-            window.location.href = WEB_APP_URL.split('?')[0] + "?page=index";
-            return;
-        }
-      }
+      // ใช้ google.script.url.getLocation แทน window.location.search
+      google.script.url.getLocation(function(location) {
+          // ดึงค่า rowid และ price จากพารามิเตอร์ URL
+          const rowid = location.parameter.rowid;
+          const userPrice = location.parameter.price;
+          
+          currentRowID = rowid; // เก็บไว้ใช้ตอนอัปโหลด
 
-      fetch(WEB_APP_URL + "?action=getConfig")
-        .then(res => res.json())
-        .then(updatePricingUI)
-        .catch(err => console.error("Load config error:", err));
+          // ตรวจสอบว่ามี rowid หรือไม่
+          if (!rowid || rowid === "undefined" || rowid === "null") {
+              alert("⚠️ ไม่พบข้อมูลการลงทะเบียน (RowID Missing)\nกรุณาลองลงทะเบียนใหม่อีกครั้ง หรือติดต่อแอดมิน");
+              // ย้ายไปหน้า index
+              window.top.location.href = WEB_APP_URL.split('?')[0] + "?page=index";
+              return;
+          }
+
+          // ถ้ามี rowid ให้โหลด Config และแสดงผล
+          fetch(WEB_APP_URL + "?action=getConfig")
+            .then(res => res.json())
+            .then(data => updatePricingUI(data, userPrice))
+            .catch(err => console.error("Load config error:", err));
+      });
     };
 
-    function updatePricingUI(data) {
+    function updatePricingUI(data, userPrice) {
       if (!data) return;
       const paid = data.paidCount;
       const cfg = data.config; 
@@ -220,6 +225,7 @@
         tNormal.className = 'tier-item active';
       }
 
+      // แสดงราคาของผู้ใช้
       if (userPrice && userPrice !== "undefined") {
         document.getElementById('showPrice').innerText = Number(userPrice).toLocaleString();
       } else {
@@ -260,12 +266,8 @@
       reader.onload = function(e) {
         const base64 = e.target.result.split(',')[1];
         
-        // ใช้ rowid จากตัวแปร global ที่ดึงมาจาก params หรือ match
-        let finalRowId = rowid;
-        if (!finalRowId || finalRowId === "undefined") {
-             const match = window.location.href.match(/rowid=([^&]+)/);
-             if(match) finalRowId = match[1];
-        }
+        // ใช้ rowid ที่เก็บไว้ในตัวแปร global
+        let finalRowId = currentRowID;
 
         fetch(WEB_APP_URL, {
           method: 'POST',
@@ -280,7 +282,7 @@
           if(res.status === 'success') {
             // ล้าง URL ก่อนไปหน้า Success
             let cleanUrl = WEB_APP_URL.split('?')[0];
-            window.location.href = cleanUrl + "?page=success";
+            window.top.location.href = cleanUrl + "?page=success";
           } else {
             alert("เกิดข้อผิดพลาด: " + res.message);
             document.getElementById('loading').style.display = 'none';
