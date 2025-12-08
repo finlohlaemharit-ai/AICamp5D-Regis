@@ -1,1 +1,161 @@
-html
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ชำระเงินคอร์ส AI Content Bootcamp</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Prompt", sans-serif;
+  background: #f2f7ff;
+  color: #003B8E;
+}
+
+.container {
+  max-width: 480px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Card */
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.08);
+  margin-bottom: 20px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.price {
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #0072FF;
+}
+
+.qr-box {
+  text-align: center;
+}
+.qr-img {
+  width: 220px;
+  height: auto;
+  border-radius: 12px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+/* Upload Section */
+label {
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+}
+
+input[type=file] {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border-radius: 10px;
+  border: 1px solid #bbb;
+}
+
+button {
+  width: 100%;
+  padding: 16px;
+  margin-top: 18px;
+  border: none;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  background: #0072FF;
+  color: white;
+}
+
+.success {
+  display: none;
+  padding: 20px;
+  text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="card">
+    <h2>ชำระเงินคอร์ส AI Content Bootcamp</h2>
+    <div id="showPrice" class="price"></div>
+
+    <div class="qr-box">
+      <div>📌 สแกนเพื่อชำระเงิน</div>
+      <!-- ใส่ QR ของคุณเองตรงนี้ -->
+      <img src="https://lh5.googleusercontent.com/d/1XTK-hRKadNaPH5HUqgROer_xbuehWIT1" class="qr-img" />
+    </div>
+
+    <label>แนบสลิปชำระเงิน</label>
+    <input type="file" id="slipFile" accept="image/*">
+
+    <button onclick="submitSlip()">ยืนยันการชำระเงิน</button>
+
+    <div id="successBox" class="success">
+      <h3>อัปโหลดสลิปสำเร็จ!</h3>
+      <p>ระบบส่งแจ้งเตือนไปยังผู้ดูแลแล้ว</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let rowid = "";
+let price = "";
+
+// Read query parameters
+function getQueryParams() {
+  const params = new URLSearchParams(window.location.search);
+  rowid = params.get("rowid");
+  price = params.get("price");
+  document.getElementById("showPrice").innerHTML = price + " บาท";
+}
+getQueryParams();
+
+// Submit slip
+function submitSlip() {
+  const file = document.getElementById("slipFile").files[0];
+  if (!file) {
+    alert("กรุณาแนบสลิปก่อน");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const base64Slip = e.target.result.split(",")[1];
+
+    google.script.run
+      .withSuccessHandler(function(res) {
+        document.getElementById("successBox").style.display = "block";
+        setTimeout(function() {
+          window.location.href = "?page=success";
+        }, 1500);
+      })
+      .uploadSlip(rowid, base64Slip);
+  };
+
+  reader.readAsDataURL(file);
+}
+</script>
+
+</body>
+</html>
