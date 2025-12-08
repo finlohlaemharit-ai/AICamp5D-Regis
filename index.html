@@ -3,290 +3,241 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AI Content Bootcamp ลงทะเบียน</title>
+<title>AI Content Bootcamp – Register</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+/* -------------------------
+   GLOBAL DARK MODE THEME
+---------------------------*/
 body {
   margin: 0;
+  padding: 0;
   font-family: "Prompt", sans-serif;
-  background: #f2f7ff;
-  color: #003B8E;
+  background: radial-gradient(circle at top, #0a1a33, #020813 70%);
+  color: #E6EEFF;
+  overflow-x: hidden;
 }
 
 .container {
   max-width: 480px;
   margin: auto;
-  padding: 20px;
+  padding: 18px;
 }
 
-/* Header Banner */
+/* -------------------------
+   GLASS CARD
+---------------------------*/
+.glass-box {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(14px);
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 22px;
+  box-shadow: 0 0 18px rgba(0,0,0,0.35);
+}
+
+/* -------------------------
+   HEADER BANNER
+---------------------------*/
 .banner-box {
   width: 100%;
-  height: 160px;
-  border-radius: 14px;
-  background: linear-gradient(to bottom right, #00C6FF, #0072FF);
+  height: 180px;
+  border-radius: 16px;
+  background: url("https://lh5.googleusercontent.com/d/1ayffpS4-QVA61ho7Jvcux9TNevIeM1WQ") center/cover no-repeat,
+              linear-gradient(135deg, #045DE9 0%, #0a1e49 100%);
   display: flex;
-  align-items: center;
   justify-content: center;
-  color: white;
-  text-align: center;
-  padding: 10px;
+  align-items: center;
+  color: #fff;
   margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
 }
 
-.logo {
-  width: 80px;
-  margin-bottom: 6px;
+.banner-box::after {
+  content: "";
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: rgba(0,150,255,0.25);
+  filter: blur(60px);
+  top: -50px;
+  right: -70px;
 }
 
-h2 {
-  margin: 0;
-  font-size: 24px;
+.banner-title {
+  z-index: 5;
+  font-size: 22px;
   font-weight: 700;
-  text-align: center;
-  color: #003B8E;
 }
 
-.subtitle {
-  text-align: center;
-  margin-top: 4px;
-  font-size: 15px;
-  color: #555;
-}
-
-/* Section titles */
+/* -------------------------
+   TITLES
+---------------------------*/
 .section-title {
   font-size: 18px;
-  font-weight: bold;
-  margin-top: 25px;
-  margin-bottom: 10px;
+  font-weight: 700;
+  margin-bottom: 8px;
 }
 
-/* Agenda */
-.agenda-box {
-  background: white;
-  padding: 15px;
-  border-radius: 14px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.06);
-  margin-bottom: 20px;
-}
-
-/* Buttons */
+/* -------------------------
+   BUTTON SELECTORS
+---------------------------*/
 .choice-btn {
   width: 100%;
   padding: 14px;
   margin: 6px 0;
-  border-radius: 10px;
-  border: 2px solid #003B8E;
-  background: white;
-  color: #003B8E;
-  cursor: pointer;
+  border-radius: 12px;
+  border: 1px solid #2f61c4;
+  background: rgba(255,255,255,0.05);
+  color: #bcd9ff;
   font-size: 15px;
-  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
 .choice-btn.active {
-  background: #003B8E;
-  color: white;
+  background: linear-gradient(90deg,#0a5cff,#009dff);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 0 12px rgba(0,145,255,0.6);
 }
 
-/* Form Inputs */
+/* -------------------------
+   INPUT FIELDS
+---------------------------*/
 input, select {
   width: 100%;
-  padding: 12px;
-  margin: 7px 0;
+  padding: 14px;
+  margin: 6px 0;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
   border-radius: 10px;
-  border: 1px solid #bbb;
+  color: white;
   font-size: 15px;
 }
 
-/* Submit button */
-.next-btn {
-  width: 100%;
-  margin-top: 15px;
-  background: #0072FF;
-  color: white;
-  padding: 16px;
-  font-size: 17px;
-  border: none;
-  border-radius: 12px;
-  font-weight: 700;
-  cursor: pointer;
+input::placeholder {
+  color: #9bb5d1;
 }
 
-.stats-box {
-  margin-top: 10px;
-  background: #ffffff;
+#position-other {
+  display: none;
+}
+
+/* -------------------------
+   SUBMIT BUTTON
+---------------------------*/
+.next-btn {
+  width: 100%;
   padding: 15px;
-  border-radius: 14px;
-  box-shadow: 0px 0px 8px rgba(0,0,0,0.06);
+  margin-top: 12px;
+  background: linear-gradient(90deg,#006CFF,#00A2FF);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0,150,255,0.5);
 }
-.stats-item {
-  margin-bottom: 10px;
-}
+
+/* -------------------------
+   PROGRESS BAR
+---------------------------*/
 .bar {
   height: 10px;
+  background: rgba(255,255,255,0.12);
   border-radius: 6px;
-  background: #d9e6ff;
+  margin-top: 5px;
   overflow: hidden;
 }
+
 .bar-fill {
   height: 100%;
-  background: #003B8E;
+  background: linear-gradient(90deg,#0a8bff,#00eaff);
   width: 0%;
+  border-radius: 6px;
+  transition: width 0.4s ease;
+}
+
+/* -------------------------
+   POPUP ALERT
+---------------------------*/
+.popup {
+  position: fixed;
+  top: -200px;
+  left: 0; right: 0;
+  margin: auto;
+  width: 80%;
+  max-width: 360px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  backdrop-filter: blur(14px);
+  padding: 18px;
+  text-align: center;
+  border-radius: 14px;
+  color: #fff;
+  box-shadow: 0 0 14px rgba(0,0,0,0.4);
+  transition: 0.35s ease;
+  z-index: 9999;
+}
+.popup.show {
+  top: 30px;
 }
 </style>
 </head>
 
 <body>
+
 <div class="container">
 
   <!-- Banner -->
   <div class="banner-box">
-    <div>
-      <img src="https://lh5.googleusercontent.com/d/1PPk9KMzLWqMK7KLfG46oES5k5Fzy6oll" class="logo" />
-      <div>AI Content Bootcamp (5 Days)</div>
-    </div>
+    <div class="banner-title">AI Content Bootcamp (5 Days)</div>
   </div>
 
-  <h2>ลงทะเบียนเรียนคอร์ส</h2>
-  <div class="subtitle">เรียนจริง 5 วัน | ใช้ได้ทั้ง Facebook • DO • LINE OA</div>
+  <div class="glass-box">
+    <div class="section-title">เลือกวันเรียน</div>
+    <button class="choice-btn" id="dayA" onclick="selectDay('A')">A) 8–12 มกราคม</button>
+    <button class="choice-btn" id="dayB" onclick="selectDay('B')">B) 13–17 มกราคม</button>
 
-  <!-- Platforms -->
-  <div class="section-title">แพลตฟอร์มที่ใช้เรียน</div>
-  <div class="agenda-box">
-    Canva • CapCut • Keynote • Numbers <br>
-    ChatGPT • Gemini <br>
-    Facebook • Digital Office • LINE OA
+    <div class="section-title">เลือกเวลาเรียน</div>
+    <button class="choice-btn" id="time1" onclick="selectTime('19-21')">19:00 – 21:00 น.</button>
+    <button class="choice-btn" id="time2" onclick="selectTime('20-22')">20:00 – 22:00 น.</button>
   </div>
 
-  <!-- Agenda -->
-  <div class="section-title">Agenda (5 วัน)</div>
-  <div class="agenda-box">
-    ✔ เทคนิคทำคอนเทนต์ทุกแบบ (ภาพ/โพสต์/คลิป) <br>
-    ✔ ฝึกใช้งาน ChatGPT + Gemini <br>
-    ✔ ฝึก Canva + CapCut <br>
-    ✔ DO + Facebook Content Flow <br>
-    ✔ สร้างไฟล์เสนอขายด้วย Numbers <br>
-    ✔ ปิดท้ายสรุปการทำงานแบบมืออาชีพ
+  <div class="glass-box">
+    <div class="section-title">ข้อมูลผู้สมัคร</div>
+
+    <input id="fullname" type="text" placeholder="ชื่อ - นามสกุล">
+    <input id="phone" type="tel" pattern="[0-9]*" inputmode="numeric" placeholder="เบอร์โทร">
+    <input id="email" type="email" placeholder="อีเมล">
+    <input id="lineid" type="text" placeholder="LINE ID">
+    <input id="branch" type="text" placeholder="สาขา">
+
+    <select id="position" onchange="toggleOtherPosition()">
+      <option value="">เลือกตำแหน่ง</option>
+      <option>ตัวแทน</option>
+      <option>ผู้บริหารหน่วย</option>
+      <option>ผู้บริหารศูนย์</option>
+      <option>ผู้จัดการศูนย์</option>
+      <option>ผู้บริหารภาค</option>
+      <option>ผู้จัดการภาค</option>
+      <option>ผู้จัดการภาคอาวุโส</option>
+      <option>ผู้จัดการฝ่าย</option>
+      <option value="other">อื่นๆ</option>
+    </select>
+
+    <input id="position-other" type="text" placeholder="ระบุชื่อตำแหน่ง">
+
+    <button class="next-btn" onclick="submitForm()">ไปชำระเงิน</button>
   </div>
-
-  <!-- Day Selection -->
-  <div class="section-title">เลือกวันเรียน</div>
-
-  <button class="choice-btn" id="dayA" onclick="selectDay('A')">
-    A) 8–12 มกราคม 2568
-  </button>
-  <button class="choice-btn" id="dayB" onclick="selectDay('B')">
-    B) 13–17 มกราคม 2568
-  </button>
-
-  <!-- Time Selection -->
-  <div class="section-title">เลือกเวลาเรียน</div>
-
-  <button class="choice-btn" id="time1" onclick="selectTime('19:00-21:00')">
-    19:00 – 21:00 น.
-  </button>
-  <button class="choice-btn" id="time2" onclick="selectTime('20:00-22:00')">
-    20:00 – 22:00 น.
-  </button>
-
-  <!-- Stats -->
-  <div class="section-title">สถิติการลงทะเบียน</div>
-  <div class="stats-box" id="statsBox">
-    <div class="stats-item">
-      วัน A
-      <div class="bar"><div class="bar-fill" id="barA"></div></div>
-    </div>
-    <div class="stats-item">
-      วัน B
-      <div class="bar"><div class="bar-fill" id="barB"></div></div>
-    </div>
-    <div class="stats-item">
-      เวลา 19–21
-      <div class="bar"><div class="bar-fill" id="barT1"></div></div>
-    </div>
-    <div class="stats-item">
-      เวลา 20–22
-      <div class="bar"><div class="bar-fill" id="barT2"></div></div>
-    </div>
-  </div>
-
-  <!-- Form -->
-  <div class="section-title">ข้อมูลผู้สมัคร</div>
-
-  <input id="fullname" type="text" placeholder="ชื่อ - นามสกุล">
-  <input id="phone" type="number" placeholder="เบอร์โทร">
-  <input id="email" type="email" placeholder="อีเมล">
-  <input id="lineid" type="text" placeholder="LINE ID">
-  <input id="branch" type="text" placeholder="สาขา">
-
-  <select id="position">
-    <option value="">เลือกตำแหน่ง</option>
-    <option>ตัวแทน</option>
-    <option>ผู้บริหารหน่วย</option>
-    <option>ผู้บริหารศูนย์</option>
-    <option>ผู้จัดการศูนย์</option>
-    <option>ผู้บริหารภาค</option>
-    <option>ผู้จัดการภาค</option>
-    <option>ผู้จัดการภาคอาวุโส</option>
-    <option>ผู้จัดการฝ่าย</option>
-    <option>อื่นๆ</option>
-  </select>
-
-  <button class="next-btn" onclick="submitForm()">ไปชำระเงิน</button>
-
 </div>
 
-<script>
-let selectedDay = "";
-let selectedTime = "";
-
-// Select Day
-function selectDay(day) {
-  selectedDay = day;
-  document.getElementById("dayA").classList.remove("active");
-  document.getElementById("dayB").classList.remove("active");
-  if (day === "A") document.getElementById("dayA").classList.add("active");
-  else document.getElementById("dayB").classList.add("active");
-}
-
-// Select Time
-function selectTime(time) {
-  selectedTime = time;
-  document.getElementById("time1").classList.remove("active");
-  document.getElementById("time2").classList.remove("active");
-  if (time.includes("19")) document.getElementById("time1").classList.add("active");
-  else document.getElementById("time2").classList.add("active");
-}
-
-// Submit
-function submitForm() {
-  const data = {
-    fullname: fullname.value,
-    phone: phone.value,
-    email: email.value,
-    lineid: lineid.value,
-    branch: branch.value,
-    position: position.value,
-    day: selectedDay,
-    time: selectedTime
-  };
-
-  if (!data.fullname || !data.phone || !data.email || !data.day || !data.time) {
-    alert("กรุณากรอกข้อมูลให้ครบ");
-    return;
-  }
-
-  google.script.run
-    .withSuccessHandler(function(res) {
-      window.location.href = "?page=payment&rowid=" + res.rowid + "&price=" + res.price;
-    })
-    .registerUser(data);
-}
-</script>
-
-</body>
-</html>
+<!-- Popup -->
+<div id="popup" class="popup">กรุณากรอกข้อมูลให้ครบถ้วน</div>
