@@ -7,30 +7,42 @@
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    /* CSS เดิมทั้งหมดของคุณ */
+    /* CSS รวมทุกหน้า */
     body { font-family: "Prompt", sans-serif; background: #F0F6FF; color: #003B8E; margin: 0; padding-bottom: 40px; }
     .container { max-width: 550px; margin: auto; padding: 20px; box-sizing: border-box; }
-    .banner { width: 100%; border-radius: 16px; overflow: hidden; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,59,142,0.2); background: linear-gradient(135deg, #00C6FF, #0072FF); color: white; text-align: center; padding: 40px 20px; box-sizing: border-box; }
+    
+    /* Banner & Header */
+    .banner { width: 100%; border-radius: 16px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,59,142,0.2); background: linear-gradient(135deg, #00C6FF, #0072FF); color: white; text-align: center; padding: 40px 20px; box-sizing: border-box; }
     .banner h1 { margin: 0; font-size: 26px; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.1); line-height: 1.3; }
     .banner p { margin: 8px 0 0; opacity: 0.95; font-size: 15px; font-weight: 300; }
     .logo-badge { background: rgba(255,255,255,0.25); padding: 6px 14px; border-radius: 20px; font-size: 13px; margin-bottom: 12px; display: inline-block; backdrop-filter: blur(5px); }
+    
+    /* Cards & Sections */
     .card { background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); margin-bottom: 20px; }
     .section-title { font-size: 18px; font-weight: 700; margin: 30px 0 12px; padding-left: 10px; border-left: 5px solid #00C6FF; line-height: 1; color: #003B8E; }
-    .tech-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 10px; }
+    
+    /* Tech Badges */
+    .tech-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 25px; }
     .tech-badge { background: white; border: 1px solid #E6F7FF; color: #0072FF; padding: 8px 14px; border-radius: 50px; font-size: 13px; font-weight: 500; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
-    .agenda-toggle-btn { background: white; color: #003B8E; width: 100%; padding: 15px 20px; border: none; border-radius: 12px; font-family: "Prompt", sans-serif; font-size: 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: all 0.3s ease; }
+    
+    /* Agenda */
+    .agenda-toggle-btn { background: white; color: #003B8E; width: 100%; padding: 15px 20px; border: none; border-radius: 12px; font-family: "Prompt", sans-serif; font-size: 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: all 0.3s ease; margin-bottom: 25px; }
     .agenda-toggle-btn:hover { background: #f9fcff; box-shadow: 0 6px 15px rgba(0,0,0,0.08); }
-    .agenda-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; background: white; border-radius: 0 0 12px 12px; margin-top: -5px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-    .agenda-content.show { max-height: 500px; }
+    .agenda-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; background: white; border-radius: 0 0 12px 12px; margin-top: -30px; margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); position: relative; z-index: 1; }
+    .agenda-content.show { max-height: 500px; margin-top: -20px; }
     .agenda-list { padding: 20px; list-style: none; margin: 0; }
     .agenda-list li { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed #eee; font-size: 14px; display: flex; align-items: flex-start; }
     .agenda-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
     .day-badge { background: #E6F7FF; color: #0072FF; font-weight: 700; padding: 2px 8px; border-radius: 6px; margin-right: 10px; font-size: 12px; min-width: 45px; text-align: center; }
+
+    /* Stats */
     .stats-row { margin-bottom: 14px; }
     .stats-label { font-size: 14px; margin-bottom: 6px; display: flex; justify-content: space-between; color: #444; }
     .stat-max { color: #FF0000 !important; font-weight: 800 !important; font-size: 16px !important; }
     .progress-bg { background: #E1E8F5; height: 12px; border-radius: 6px; overflow: hidden; }
     .progress-fill { background: linear-gradient(90deg, #00C6FF, #0072FF); height: 100%; width: 0%; transition: width 1s ease; border-radius: 6px; }
+
+    /* Form Inputs */
     .choice-group { display: flex; flex-direction: column; gap: 12px; }
     .choice-btn { border: 2px solid #E1E8F5; padding: 18px; border-radius: 14px; background: white; cursor: pointer; text-align: left; transition: all 0.2s; position: relative; }
     .choice-btn:hover { border-color: #00C6FF; }
@@ -43,12 +55,65 @@
     .required { color: #FF4D4F; margin-left: 4px; font-size: 16px; }
     input, select { width: 100%; padding: 16px; border: 1px solid #E1E8F5; border-radius: 12px; font-size: 16px; font-family: "Prompt"; background: #FAFCFF; box-sizing: border-box; outline: none; transition: 0.3s; color: #333; }
     input:focus, select:focus { border-color: #0072FF; background: white; box-shadow: 0 0 0 3px rgba(0,114,255,0.1); }
+    
     .submit-btn { width: 100%; background: linear-gradient(90deg, #0072FF, #00C6FF); color: white; border: none; padding: 18px; font-size: 18px; font-weight: 700; border-radius: 50px; cursor: pointer; box-shadow: 0 8px 25px rgba(0,114,255,0.35); margin-top: 15px; transition: transform 0.2s; }
     .submit-btn:active { transform: scale(0.98); }
-    .price-tag { text-align: center; margin-top: 12px; font-size: 14px; color: #666; }
+    
+    /* Payment & Success Styles */
+    .tier-container { background: #fff; border: 1px solid #E1E8F5; border-radius: 16px; overflow: hidden; margin-bottom: 25px; text-align: left; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+    .tier-item { padding: 15px 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; font-size: 15px; color: #888; position: relative; transition: all 0.3s; }
+    .tier-item:last-child { border-bottom: none; }
+    .tier-item.active { background: #E6F7FF; color: #003B8E; font-weight: 700; border-left: 6px solid #0072FF; }
+    .tier-item.sold-out { background: #fcfcfc; color: #ccc; }
+    .tier-item.sold-out span:first-child { text-decoration: line-through; }
+    .badge-stock { background: linear-gradient(135deg, #FF4D4F, #FF7875); color: white; font-size: 12px; padding: 4px 10px; border-radius: 20px; margin-left: 8px; font-weight: 600; display: inline-block; vertical-align: middle; animation: pulse 2s infinite; }
+    .badge-sold { background: #999; color: white; font-size: 11px; padding: 3px 8px; border-radius: 4px; margin-left: 8px; display: inline-block; font-weight: 500; }
+    
+    .price-box { background: linear-gradient(135deg, #00C6FF, #0072FF); color: white; padding: 25px 20px; border-radius: 16px; margin-bottom: 25px; margin-top: 15px; box-shadow: 0 8px 20px rgba(0,114,255,0.25); position: relative; overflow: hidden; text-align: center; }
+    .price-val { font-size: 48px; font-weight: 800; line-height: 1; }
+    
+    .qr-frame { border: 3px solid #E1E8F5; border-radius: 20px; padding: 15px; display: inline-block; margin-bottom: 20px; background: white; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: relative; text-align: center; }
+    .qr-img { width: 100%; max-width: 260px; border-radius: 12px; display: block; }
+
+    .upload-btn-wrapper { position: relative; overflow: hidden; display: inline-block; width: 100%; margin-top: 15px; }
+    .btn-select { border: 2px dashed #0072FF; color: #0072FF; background-color: #F0F9FF; padding: 15px 20px; border-radius: 12px; font-weight: 600; width: 100%; cursor: pointer; transition: 0.2s; font-size: 16px; }
+    .upload-btn-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%; width: 100%; }
+    #preview { margin-top: 20px; max-width: 100%; border-radius: 12px; display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #eee; }
+
+    .icon-circle { width: 80px; height: 80px; background: #06C755; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; position: relative; animation: scaleUp 0.6s ease-in-out forwards; box-shadow: 0 0 0 10px rgba(6, 199, 85, 0.1); }
+    @keyframes scaleUp { 0% { transform: scale(0); opacity: 0; } 80% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); } }
+    @keyframes checkmarkSlide { 0% { width: 0; height: 0; opacity: 0; } 80% { width: 25px; height: 50px; opacity: 1; } 100% { width: 25px; height: 50px; opacity: 1; } }
+    .checkmark::after { content: ''; display: block; width: 25px; height: 50px; border: solid white; border-width: 0 6px 6px 0; transform: rotate(45deg); position: absolute; top: 10px; left: 28px; animation: checkmarkSlide 0.4s 0.3s ease-in-out forwards; opacity: 0; }
+    
+    .line-btn { display: block; width: 100%; text-decoration: none; padding: 15px 0; border-radius: 50px; font-weight: bold; margin-bottom: 10px; transition: transform 0.2s; cursor: pointer; text-align: center; }
+    .btn-main { background: #06C755; color: white; box-shadow: 0 4px 15px rgba(6,199,85,0.3); }
+    .btn-sec { background: white; color: #003B8E; border: 2px solid #003B8E; }
+
+    .hidden { display: none !important; }
+    
     #loading { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.95); z-index:999; flex-direction:column; justify-content:center; align-items:center; }
     .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #0072FF; border-radius: 50%; width: 45px; height: 45px; animation: spin 0.8s linear infinite; margin-bottom: 20px; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    /* --- Custom Modal Styles --- */
+    #custom-modal-overlay {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5); z-index: 2000; justify-content: center; align-items: center;
+      backdrop-filter: blur(3px);
+    }
+    .custom-modal {
+      background: white; width: 90%; max-width: 400px; padding: 30px 25px; border-radius: 20px;
+      text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: popIn 0.3s ease;
+    }
+    @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    .modal-icon { font-size: 50px; margin-bottom: 15px; }
+    .modal-title { font-size: 20px; font-weight: bold; margin-bottom: 10px; color: #003B8E; }
+    .modal-desc { font-size: 15px; color: #555; margin-bottom: 25px; line-height: 1.5; }
+    .modal-actions { display: flex; gap: 10px; justify-content: center; }
+    .modal-btn { flex: 1; padding: 12px; border-radius: 50px; font-weight: bold; cursor: pointer; border: none; font-size: 15px; }
+    .btn-confirm { background: #0072FF; color: white; }
+    .btn-cancel { background: #f0f0f0; color: #333; }
+    .btn-line { background: #06C755; color: white; width: 100%; display: block; text-decoration: none; padding: 12px; box-sizing: border-box; }
   </style>
 </head>
 <body>
@@ -56,14 +121,25 @@
   <!-- Loading Screen -->
   <div id="loading"><div class="spinner"></div><div style="font-weight: 600; color: #003B8E;">กำลังประมวลผล...</div></div>
 
-  <div class="container">
+  <!-- Custom Modal -->
+  <div id="custom-modal-overlay">
+    <div class="custom-modal">
+      <div id="modal-icon" class="modal-icon"></div>
+      <div id="modal-title" class="modal-title"></div>
+      <div id="modal-desc" class="modal-desc"></div>
+      <div id="modal-actions" class="modal-actions"></div>
+    </div>
+  </div>
+
+  <!-- ################# STEP 1: REGISTRATION ################# -->
+  <div id="step-register" class="container">
     <div class="banner">
       <div class="logo-badge">Chokdee Content</div>
       <h1>AI Content Bootcamp</h1>
       <p>(5 Days) สร้างคอนเทนต์ + ใช้ AI จับมือทำ</p>
     </div>
 
-    <!-- Platforms -->
+    <!-- 1. Platforms (Tech Grid) -->
     <div class="tech-grid">
       <div class="tech-badge">Canva</div>
       <div class="tech-badge">Keynote</div>
@@ -76,8 +152,7 @@
       <div class="tech-badge">LINE OA</div>
     </div>
 
-    <!-- AGENDA -->
-    <div style="margin-bottom: 25px;"></div>
+    <!-- 2. Agenda -->
     <button class="agenda-toggle-btn" onclick="toggleAgenda()">
       <span>⭐️ AGENDA สรุป 5 วัน</span>
       <i class="fas fa-chevron-down" id="agenda-icon"></i>
@@ -92,9 +167,9 @@
       </ul>
     </div>
 
-    <!-- Stats -->
-    <div class="section-title">📊 สถิติการเลือกเรียน (Real-time)</div>
+    <!-- 3. Stats -->
     <div class="card">
+      <div class="section-title" style="margin-top:0;">📊 สถิติการเลือกเรียน (Real-time)</div>
       <div class="stats-row"><div class="stats-label"><span>8–12 ม.ค.</span> <span id="txt-dayA">0%</span></div><div class="progress-bg"><div class="progress-fill" id="bar-dayA"></div></div></div>
       <div class="stats-row"><div class="stats-label"><span>13–17 ม.ค.</span> <span id="txt-dayB">0%</span></div><div class="progress-bg"><div class="progress-fill" id="bar-dayB"></div></div></div>
       <div style="margin: 20px 0; border-top: 1px dashed #E1E8F5;"></div>
@@ -103,7 +178,7 @@
       <div style="text-align: center; font-size: 13px; color: #888; margin-top: 15px; background: #f9f9f9; padding: 8px; border-radius: 8px;">ผู้ลงทะเบียนแล้วทั้งหมด: <b id="total-reg" style="color: #003B8E;">...</b> ท่าน</div>
     </div>
 
-    <!-- Form -->
+    <!-- 4. Form Inputs -->
     <div class="section-title" id="section-day">📅 เลือกวันเรียน <span class="required">*</span></div>
     <div class="choice-group" style="margin-bottom: 20px;">
       <div class="choice-btn" onclick="selectDay('A', this)"><span class="choice-title">A) 8–12 มกราคม 2568</span><span class="choice-desc">วันพุธ – อาทิตย์</span></div>
@@ -145,50 +220,113 @@
     </div>
 
     <button class="submit-btn" onclick="submitForm()">ยืนยันข้อมูล & ไปชำระเงิน</button>
-    <div class="price-tag">ราคาจะคำนวณอัตโนมัติในหน้าถัดไป</div>
   </div>
 
+
+  <!-- ################# STEP 2: PAYMENT ################# -->
+  <div id="step-payment" class="container hidden">
+    <h3 style="margin-top:0; color:#003B8E; font-size: 22px; text-align:center;">ชำระเงินค่าคอร์ส</h3>
+
+    <!-- Tiers -->
+    <div class="tier-container" id="pricing-tiers">
+      <div class="tier-item" id="tier-super">
+        <span>Super Early Bird</span><span id="price-super">...</span>
+      </div>
+      <div class="tier-item" id="tier-early">
+        <span>Early Bird</span><span id="price-early">...</span>
+      </div>
+      <div class="tier-item" id="tier-normal">
+        <span>ราคาปกติ</span><span id="price-normal">...</span>
+      </div>
+    </div>
+
+    <div class="price-box">
+      <div class="price-label">ยอดที่ต้องชำระ (สิทธิ์ของคุณ)</div>
+      <div>
+        <span class="price-val" id="showPrice">...</span><span class="price-unit">บาท</span>
+      </div>
+    </div>
+
+    <div style="text-align: center;">
+      <div class="qr-frame">
+        <img src="https://lh5.googleusercontent.com/d/1XTK-hRKadNaPH5HUqgROer_xbuehWIT1" class="qr-img" id="qrImage">
+        <p style="font-size: 13px; margin: 10px 0 0; color:#555; font-weight: 500;">
+          <i class="fas fa-university"></i> ธนาคารกสิกรไทย<br>
+          <span style="color:#003B8E; font-weight:bold;">726-2-87971-7</span>
+        </p>
+      </div>
+    </div>
+
+    <div style="text-align: left; margin-top: 15px;">
+      <label style="font-weight: bold; font-size:15px; margin-left:5px; color:#333;">แนบหลักฐานการโอนเงิน</label>
+      <div class="upload-btn-wrapper">
+        <button class="btn-select" id="btnSelect">
+          <i class="fas fa-cloud-upload-alt"></i> แตะเพื่อเลือกรูปสลิป
+        </button>
+        <input type="file" id="slipFile" accept="image/*" onchange="previewFile()">
+      </div>
+      <img id="preview">
+    </div>
+
+    <button class="submit-btn" id="btnConfirm" onclick="uploadSlip()">
+      <i class="fas fa-check-circle"></i> ยืนยันการชำระเงิน
+    </button>
+  </div>
+
+
+  <!-- ################# STEP 3: SUCCESS ################# -->
+  <div id="step-success" class="container hidden" style="text-align: center; padding-top: 40px;">
+    <div class="icon-circle">
+      <div class="checkmark"></div>
+    </div>
+    <h2 style="color:#003B8E; margin-bottom:10px;">ลงทะเบียนสำเร็จ!</h2>
+    <p style="color:#666; font-size:14px; margin-bottom:30px;">ระบบได้รับข้อมูลและสลิปเรียบร้อยแล้ว<br>กรุณากดปุ่มด้านล่างเพื่อเข้ากลุ่มเรียน</p>
+    
+    <a href="https://line.me/ti/g/fmMXxuHaw-" class="line-btn btn-main" target="_blank">
+      เข้ากลุ่มไลน์ (Click)
+    </a>
+
+    <a href="#" onclick="location.reload()" class="line-btn btn-sec">
+      ลงทะเบียนเพิ่ม
+    </a>
+  </div>
+
+
   <script>
-    // ⚠️ ตรวจสอบ URL ให้ถูกต้อง (Deploy as Web App)
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxF05osbY7_YmN1TDD_LxShhLXG94XSKXePRNo0JltzWbfFpfsNBQVT97EhtAoOOvdolg/exec";
+    // ⚠️ 1. Deploy GAS เป็น Web App (เลือก Anyone)
+    // ⚠️ 2. นำ URL มาใส่ตรงนี้
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbznKJOCb6fDKJMWR_1Rv5uc5sBKcjdajwlgMaw7dX9-k1_Eqi_E4l6FsNDRvtIDWmjm5g/exec";
 
+    // Global State
     let selectedData = { day: "", time: "" };
+    let globalRowID = null;
+    let globalPrice = null;
+    let globalConfig = null;
 
+    // ----- Initialization -----
     window.onload = function() {
       fetch(WEB_APP_URL + "?action=getStats")
         .then(res => res.json())
         .then(renderStats)
-        .catch(err => console.warn("Cannot load stats:", err));
+        .catch(err => console.warn("Stats load error:", err));
+      
+      fetch(WEB_APP_URL + "?action=getConfig")
+        .then(res => res.json())
+        .then(data => { globalConfig = data; })
+        .catch(err => console.warn("Config load error:", err));
     };
 
-    function renderStats(stats) {
-      if (!stats) return;
-      document.getElementById("total-reg").innerText = stats.total;
-      updateBar("bar-dayA", "txt-dayA", stats.dayA, stats.total);
-      updateBar("bar-dayB", "txt-dayB", stats.dayB, stats.total);
-      updateBar("bar-time1", "txt-time1", stats.time1, stats.total);
-      updateBar("bar-time2", "txt-time2", stats.time2, stats.total);
+    // ----- NAVIGATION -----
+    function showStep(stepId) {
+      document.getElementById('step-register').classList.add('hidden');
+      document.getElementById('step-payment').classList.add('hidden');
+      document.getElementById('step-success').classList.add('hidden');
       
-      ['txt-dayA', 'txt-dayB', 'txt-time1', 'txt-time2'].forEach(id => document.getElementById(id).classList.remove('stat-max'));
-      if (stats.dayA > stats.dayB) document.getElementById('txt-dayA').classList.add('stat-max');
-      else if (stats.dayB > stats.dayA) document.getElementById('txt-dayB').classList.add('stat-max');
-      if (stats.time1 > stats.time2) document.getElementById('txt-time1').classList.add('stat-max');
-      else if (stats.time2 > stats.time1) document.getElementById('txt-time2').classList.add('stat-max');
+      document.getElementById(stepId).classList.remove('hidden');
+      window.scrollTo(0, 0);
     }
 
-    function updateBar(barId, txtId, val, total) {
-      let pct = total === 0 ? 0 : Math.round((val / total) * 100);
-      document.getElementById(barId).style.width = pct + "%";
-      document.getElementById(txtId).innerText = pct + "% (" + val + " คน)";
-    }
-
-    function toggleAgenda() {
-      const box = document.getElementById('agenda-box');
-      const icon = document.getElementById('agenda-icon');
-      if (box.classList.contains('show')) { box.classList.remove('show'); icon.classList.remove('fa-chevron-up'); icon.classList.add('fa-chevron-down'); }
-      else { box.classList.add('show'); icon.classList.remove('fa-chevron-down'); icon.classList.add('fa-chevron-up'); }
-    }
-
+    // ----- STEP 1 LOGIC (REGISTER) -----
     function selectDay(val, el) {
       const mappedValue = val === 'A' ? '8–12 มกราคม 2568' : '13–17 มกราคม 2568';
       const group = el.closest('.choice-group');
@@ -202,13 +340,85 @@
       else { group.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); selectedData.time = val; }
     }
 
-    function toggleOtherPosition() {
-      const pos = document.getElementById('position').value;
-      const otherGroup = document.getElementById('other-position-group');
-      if (pos === 'อื่นๆ') otherGroup.style.display = 'block'; else { otherGroup.style.display = 'none'; document.getElementById('other_position').value = ''; }
+    function toggleAgenda() {
+      const box = document.getElementById('agenda-box');
+      const icon = document.getElementById('agenda-icon');
+      if (box.classList.contains('show')) { box.classList.remove('show'); icon.classList.remove('fa-chevron-up'); icon.classList.add('fa-chevron-down'); }
+      else { box.classList.add('show'); icon.classList.remove('fa-chevron-down'); icon.classList.add('fa-chevron-up'); }
     }
 
-    function submitForm() {
+    function toggleOtherPosition() {
+        const pos = document.getElementById('position').value;
+        const otherGroup = document.getElementById('other-position-group');
+        if (pos === 'อื่นๆ') otherGroup.style.display = 'block'; 
+        else { otherGroup.style.display = 'none'; document.getElementById('other_position').value = ''; }
+    }
+
+    function renderStats(stats) {
+      if (!stats) return;
+      document.getElementById("total-reg").innerText = stats.total;
+      updateBar("bar-dayA", "txt-dayA", stats.dayA, stats.total);
+      updateBar("bar-dayB", "txt-dayB", stats.dayB, stats.total);
+      updateBar("bar-time1", "txt-time1", stats.time1, stats.total);
+      updateBar("bar-time2", "txt-time2", stats.time2, stats.total);
+      
+      ['txt-dayA', 'txt-dayB', 'txt-time1', 'txt-time2'].forEach(id => document.getElementById(id).classList.remove('stat-max'));
+      if (stats.dayA > stats.dayB) document.getElementById('txt-dayA').classList.add('stat-max');
+      else if (stats.dayB > stats.dayA) document.getElementById('txt-dayB').classList.add('stat-max');
+    }
+
+    function updateBar(barId, txtId, val, total) {
+      let pct = total === 0 ? 0 : Math.round((val / total) * 100);
+      document.getElementById(barId).style.width = pct + "%";
+      document.getElementById(txtId).innerText = pct + "% (" + val + " คน)";
+    }
+
+    // --- Custom Modal Function ---
+    function showModal(type, callback) {
+        const overlay = document.getElementById('custom-modal-overlay');
+        const icon = document.getElementById('modal-icon');
+        const title = document.getElementById('modal-title');
+        const desc = document.getElementById('modal-desc');
+        const actions = document.getElementById('modal-actions');
+
+        overlay.style.display = 'flex';
+        actions.innerHTML = ''; // Clear old buttons
+
+        if (type === 'duplicate_pending') {
+            icon.innerHTML = '⚠️';
+            title.innerText = 'พบข้อมูลเดิมในระบบ';
+            desc.innerHTML = 'เบอร์โทรศัพท์นี้ลงทะเบียนไว้แล้วแต่ยังไม่ได้ชำระเงิน<br>คุณต้องการอัปเดตข้อมูลใหม่และดำเนินการต่อหรือไม่?';
+            
+            const btnConfirm = document.createElement('button');
+            btnConfirm.className = 'modal-btn btn-confirm';
+            btnConfirm.innerText = 'ยืนยัน / ไปจ่ายเงิน';
+            btnConfirm.onclick = function() { overlay.style.display = 'none'; callback(true); };
+
+            const btnCancel = document.createElement('button');
+            btnCancel.className = 'modal-btn btn-cancel';
+            btnCancel.innerText = 'ยกเลิก';
+            btnCancel.onclick = function() { overlay.style.display = 'none'; callback(false); location.reload(); };
+
+            actions.appendChild(btnCancel);
+            actions.appendChild(btnConfirm);
+        } 
+        else if (type === 'duplicate_paid') {
+            icon.innerHTML = '✅';
+            title.innerText = 'ชำระเงินเรียบร้อยแล้ว';
+            desc.innerHTML = 'เบอร์โทรศัพท์นี้ได้ลงทะเบียนและชำระเงินแล้ว<br>สามารถเข้ากลุ่มเรียนได้ทันที';
+            
+            const btnLine = document.createElement('a');
+            btnLine.className = 'modal-btn btn-line';
+            btnLine.innerText = 'เข้ากลุ่มไลน์ (Click)';
+            btnLine.href = 'https://line.me/ti/g/fmMXxuHaw-';
+            btnLine.target = '_blank';
+
+            actions.appendChild(btnLine);
+        }
+    }
+
+    // --- Submit Form Logic ---
+    function submitForm(isForceUpdate = false) {
       const phoneInput = document.getElementById('phone').value.trim();
       let positionValue = document.getElementById('position').value;
       const otherPositionValue = document.getElementById('other_position').value.trim();
@@ -235,48 +445,144 @@
       
       fetch(WEB_APP_URL, {
         method: 'POST',
-        body: JSON.stringify({ action: 'register', form: form }),
+        body: JSON.stringify({ action: 'register', form: form, forceUpdate: isForceUpdate }),
       })
       .then(res => res.json())
       .then(res => {
-        // --- ส่วนที่แก้ไข: เพิ่มระบบ Fail-safe และทำความสะอาด URL ---
-        const isSuccess = res.status === "OK" || res.status === "NEW" || res.status === "UPDATE_PENDING" || (res.rowid && res.status !== "error");
-
-        if(res.status === "ALREADY_PAID") {
-           alert("✅ เบอร์โทรนี้ชำระเงินเรียบร้อยแล้ว\nระบบจะพาคุณไปยังหน้าเข้ากลุ่มทันที");
-           // ทำความสะอาด URL (กรณีมี ?page=index ติดมา)
-           let cleanUrl = WEB_APP_URL.split('?')[0];
-           window.location.href = cleanUrl + "?page=success"; 
-        } 
-        else if (isSuccess) {
-           if (res.status === "UPDATE_PENDING") {
-               alert("ℹ️ พบข้อมูลเดิมแต่ยังไม่ได้ชำระเงิน\nระบบได้อัปเดตข้อมูลล่าสุดให้แล้ว กรุณาชำระเงินได้เลยครับ");
-           }
-           
-           // ตรวจสอบ rowid ว่ามีค่าจริงหรือไม่
-           if(!res.rowid) {
-             alert("เกิดข้อผิดพลาด: ระบบบันทึกสำเร็จแต่ไม่ได้รับรหัสอ้างอิง (RowID)");
-             document.getElementById('loading').style.display = 'none';
-             return;
-           }
-
-           // --- ล้าง URL ให้สะอาด (แก้ปัญหาในมือถือ) ---
-           let cleanUrl = WEB_APP_URL.split('?')[0]; // ตัด parameter เก่าทิ้งทั้งหมด
-           // ใช้ encodeURIComponent ป้องกันอักขระพิเศษทำ URL พัง
-           let finalUrl = cleanUrl + "?page=payment&rowid=" + encodeURIComponent(res.rowid) + "&price=" + encodeURIComponent(res.price);
-           
-           console.log("Redirecting to: " + finalUrl);
-           window.location.href = finalUrl;
+        document.getElementById('loading').style.display = 'none';
+        
+        if (res.status === "EXISTING_FOUND") {
+            // เรียกใช้ Custom Modal แบบ Pending
+            showModal('duplicate_pending', function(confirm) {
+                if(confirm) submitForm(true); // ถ้ากดยืนยัน ให้เรียกซ้ำแบบ Force Update
+            });
         }
-        else {
-           alert("เกิดข้อผิดพลาด: " + (res.message || JSON.stringify(res)));
-           document.getElementById('loading').style.display = 'none';
+        else if (res.status === "ALREADY_PAID") {
+            // เรียกใช้ Custom Modal แบบ Paid (มีปุ่มไลน์)
+            showModal('duplicate_paid');
+        } 
+        else if (res.rowid) {
+            // Success (NEW or UPDATE)
+            globalRowID = res.rowid;
+            globalPrice = res.price;
+            
+            if (res.status === "UPDATE_SUCCESS") {
+               // ไม่ต้อง Alert แล้วเพราะผ่าน Modal มาแล้ว หรือถ้าอยากให้ขึ้นสั้นๆ ก็ได้
+            }
+            
+            setupPaymentPage();
+            showStep('step-payment');
+        } else {
+            alert("Error: " + (res.message || "Unknown error"));
         }
       })
       .catch(err => {
         document.getElementById('loading').style.display = 'none';
-        alert("เกิดข้อผิดพลาดในการเชื่อมต่อ: " + err.message);
+        alert("Connection Error: " + err.message);
       });
+    }
+
+    // ----- STEP 2 LOGIC (PAYMENT) -----
+    function setupPaymentPage() {
+      if (globalConfig) updatePricingUI(globalConfig);
+      document.getElementById('showPrice').innerText = globalPrice ? globalPrice.toLocaleString() : "...";
+    }
+
+    function updatePricingUI(data) {
+      const paid = data.paidCount;
+      const cfg = data.config; 
+
+      document.getElementById('price-super').innerText = cfg.priceSuper.toLocaleString() + ".-";
+      document.getElementById('price-early').innerText = cfg.priceEarly.toLocaleString() + ".-";
+      document.getElementById('price-normal').innerText = cfg.priceNormal.toLocaleString() + ".-";
+
+      const tSuper = document.getElementById('tier-super');
+      const tEarly = document.getElementById('tier-early');
+      const tNormal = document.getElementById('tier-normal');
+      
+      [tSuper, tEarly, tNormal].forEach(el => el.className = 'tier-item future');
+
+      if (paid < cfg.superLimit) {
+        tSuper.className = 'tier-item active';
+        const left = cfg.superLimit - paid;
+        tSuper.querySelector('span:first-child').innerHTML += ` <span class="badge-stock">🔥 เหลือ ${left} สิทธิ์</span>`;
+      } else if (paid < (cfg.earlyLimit)) { 
+        tSuper.className = 'tier-item sold-out';
+        tSuper.querySelector('span:first-child').innerHTML += ` <span class="badge-sold">SOLD OUT</span>`;
+        tEarly.className = 'tier-item active';
+        const left = (cfg.earlyLimit) - paid;
+        tEarly.querySelector('span:first-child').innerHTML += ` <span class="badge-stock">🔥 เหลือ ${left} สิทธิ์</span>`;
+      } else {
+        tSuper.className = 'tier-item sold-out';
+        tSuper.querySelector('span:first-child').innerHTML += ` <span class="badge-sold">SOLD OUT</span>`;
+        tEarly.className = 'tier-item sold-out';
+        tEarly.querySelector('span:first-child').innerHTML += ` <span class="badge-sold">SOLD OUT</span>`;
+        tNormal.className = 'tier-item active';
+      }
+    }
+
+    function previewFile() {
+      const file = document.getElementById('slipFile').files[0];
+      const preview = document.getElementById('preview');
+      const btn = document.getElementById('btnConfirm');
+      const btnSelect = document.getElementById('btnSelect');
+      
+      const reader = new FileReader();
+      reader.onloadend = function() {
+        preview.src = reader.result;
+        preview.style.display = "block";
+        btnSelect.innerHTML = '<i class="fas fa-sync-alt"></i> เปลี่ยนรูปสลิป';
+        btn.style.display = "block";
+        btn.scrollIntoView({behavior: "smooth"});
+      }
+      if (file) reader.readAsDataURL(file);
+    }
+
+    function uploadSlip() {
+      const file = document.getElementById('slipFile').files[0];
+      if(!file) return alert("กรุณาแนบสลิป");
+
+      const btn = document.getElementById('btnConfirm');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังอัปโหลด...';
+      document.getElementById('loading').style.display = 'flex';
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const base64 = e.target.result.split(',')[1];
+        
+        if (!globalRowID) {
+            alert("Error: Session Expired (RowID missing). Please register again.");
+            location.reload();
+            return;
+        }
+
+        fetch(WEB_APP_URL, {
+          method: 'POST',
+          body: JSON.stringify({ 
+            action: 'uploadSlip', 
+            rowid: globalRowID, 
+            base64: base64 
+          })
+        })
+        .then(res => res.json())
+        .then(res => {
+          document.getElementById('loading').style.display = 'none';
+          if(res.status === 'success') {
+            showStep('step-success');
+          } else {
+            alert("เกิดข้อผิดพลาด: " + res.message);
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-check-circle"></i> ยืนยันการชำระเงิน';
+          }
+        })
+        .catch(err => {
+          document.getElementById('loading').style.display = 'none';
+          alert("Connection Error: " + err.message);
+          btn.disabled = false;
+        });
+      };
+      reader.readAsDataURL(file);
     }
   </script>
 </body>
