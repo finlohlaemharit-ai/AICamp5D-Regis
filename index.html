@@ -150,7 +150,7 @@
 
   <script>
     // ⚠️ ตรวจสอบ URL ให้ถูกต้อง (Deploy as Web App)
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxTHUd7SIINN6vbVUJMEeDCv6Xpad-H_eIRIOTPvuPpYITa_CLHazAfXAmb8ORNbF-9nQ/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbycI4S8F3f82NZUZmPuShmPHM5csX2VN_QiCIbDEB080AYv7K8gOqWEdqBHmMRqWfboig/exec";
 
     let selectedData = { day: "", time: "" };
 
@@ -239,23 +239,37 @@
       })
       .then(res => res.json())
       .then(res => {
-        
-        // CASE 1: จ่ายแล้ว
+        // --- ส่วนที่แก้ไข: เพิ่มระบบ Fail-safe และทำความสะอาด URL ---
+        const isSuccess = res.status === "OK" || res.status === "NEW" || res.status === "UPDATE_PENDING" || (res.rowid && res.status !== "error");
+
         if(res.status === "ALREADY_PAID") {
            alert("✅ เบอร์โทรนี้ชำระเงินเรียบร้อยแล้ว\nระบบจะพาคุณไปยังหน้าเข้ากลุ่มทันที");
-           window.location.href = WEB_APP_URL + "?page=success"; 
+           // ทำความสะอาด URL (กรณีมี ?page=index ติดมา)
+           let cleanUrl = WEB_APP_URL.split('?')[0];
+           window.location.href = cleanUrl + "?page=success"; 
         } 
-        // CASE 2: อัปเดตข้อมูล (ยังไม่จ่าย) หรือ สมัครใหม่
-        else if (res.status === "UPDATE_PENDING") {
-           alert("ℹ️ พบข้อมูลเดิมแต่ยังไม่ได้ชำระเงิน\nระบบได้อัปเดตข้อมูลใหม่ให้แล้ว กรุณาชำระเงินในหน้าถัดไป");
-           window.location.href = WEB_APP_URL + "?page=payment&rowid=" + res.rowid + "&price=" + res.price;
-        } 
-        else if (res.status === "NEW") {
-           // กรณีสมัครใหม่ ปกติ
-           window.location.href = WEB_APP_URL + "?page=payment&rowid=" + res.rowid + "&price=" + res.price;
+        else if (isSuccess) {
+           if (res.status === "UPDATE_PENDING") {
+               alert("ℹ️ พบข้อมูลเดิมแต่ยังไม่ได้ชำระเงิน\nระบบได้อัปเดตข้อมูลล่าสุดให้แล้ว กรุณาชำระเงินได้เลยครับ");
+           }
+           
+           // ตรวจสอบ rowid ว่ามีค่าจริงหรือไม่
+           if(!res.rowid) {
+             alert("เกิดข้อผิดพลาด: ระบบบันทึกสำเร็จแต่ไม่ได้รับรหัสอ้างอิง (RowID)");
+             document.getElementById('loading').style.display = 'none';
+             return;
+           }
+
+           // --- ล้าง URL ให้สะอาด (แก้ปัญหาในมือถือ) ---
+           let cleanUrl = WEB_APP_URL.split('?')[0]; // ตัด parameter เก่าทิ้งทั้งหมด
+           // ใช้ encodeURIComponent ป้องกันอักขระพิเศษทำ URL พัง
+           let finalUrl = cleanUrl + "?page=payment&rowid=" + encodeURIComponent(res.rowid) + "&price=" + encodeURIComponent(res.price);
+           
+           console.log("Redirecting to: " + finalUrl);
+           window.location.href = finalUrl;
         }
         else {
-           alert("เกิดข้อผิดพลาด: " + (res.message || "Unknown error"));
+           alert("เกิดข้อผิดพลาด: " + (res.message || JSON.stringify(res)));
            document.getElementById('loading').style.display = 'none';
         }
       })
