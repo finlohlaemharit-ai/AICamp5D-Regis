@@ -1,243 +1,487 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AI Content Bootcamp – Register</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ลงทะเบียน AI Content Bootcamp</title>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    /* ---------------- THEME & LAYOUT ---------------- */
+    body { font-family: "Prompt", sans-serif; background: #F0F6FF; color: #003B8E; margin: 0; padding-bottom: 40px; }
+    
+    /* ปรับ Container ให้กว้างขึ้นเล็กน้อยเพื่อให้ดูเต็มจอมากขึ้นในมือถือ */
+    .container { max-width: 550px; margin: auto; padding: 20px; box-sizing: border-box; }
+    
+    /* Header & Banner */
+    .banner { 
+      width: 100%; 
+      border-radius: 16px; 
+      overflow: hidden; 
+      margin-bottom: 25px; 
+      box-shadow: 0 4px 20px rgba(0,59,142,0.2);
+      background: linear-gradient(135deg, #00C6FF, #0072FF); 
+      color: white; 
+      text-align: center; 
+      padding: 40px 20px;
+      box-sizing: border-box; /* สำคัญ: รวม padding ใน width */
+    }
+    .banner h1 { margin: 0; font-size: 26px; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.1); line-height: 1.3; }
+    .banner p { margin: 8px 0 0; opacity: 0.95; font-size: 15px; font-weight: 300; }
+    .logo-badge { background: rgba(255,255,255,0.25); padding: 6px 14px; border-radius: 20px; font-size: 13px; margin-bottom: 12px; display: inline-block; backdrop-filter: blur(5px); }
 
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    /* Cards */
+    .card { background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); margin-bottom: 20px; }
+    .section-title { font-size: 18px; font-weight: 700; margin: 30px 0 12px; padding-left: 10px; border-left: 5px solid #00C6FF; line-height: 1; color: #003B8E; }
+    
+    /* Tech Icons */
+    .tech-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 10px; }
+    .tech-badge { background: white; border: 1px solid #E6F7FF; color: #0072FF; padding: 8px 14px; border-radius: 50px; font-size: 13px; font-weight: 500; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
 
-<style>
-/* -------------------------
-   GLOBAL DARK MODE THEME
----------------------------*/
-body {
-  margin: 0;
-  padding: 0;
-  font-family: "Prompt", sans-serif;
-  background: radial-gradient(circle at top, #0a1a33, #020813 70%);
-  color: #E6EEFF;
-  overflow-x: hidden;
-}
+    /* Agenda Toggle Box */
+    .agenda-toggle-btn {
+      background: white;
+      color: #003B8E;
+      width: 100%;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 12px;
+      font-family: "Prompt", sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+    .agenda-toggle-btn:hover { background: #f9fcff; box-shadow: 0 6px 15px rgba(0,0,0,0.08); }
+    .agenda-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out;
+      background: white;
+      border-radius: 0 0 12px 12px;
+      margin-top: -5px; /* เชื่อมกับปุ่ม */
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .agenda-content.show { max-height: 500px; /* ค่าประมาณความสูง */ }
+    .agenda-list { padding: 20px; list-style: none; margin: 0; }
+    .agenda-list li { 
+      margin-bottom: 12px; 
+      padding-bottom: 12px; 
+      border-bottom: 1px dashed #eee; 
+      font-size: 14px; 
+      display: flex;
+      align-items: flex-start;
+    }
+    .agenda-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .day-badge { 
+      background: #E6F7FF; color: #0072FF; font-weight: 700; padding: 2px 8px; border-radius: 6px; 
+      margin-right: 10px; font-size: 12px; min-width: 45px; text-align: center;
+    }
 
-.container {
-  max-width: 480px;
-  margin: auto;
-  padding: 18px;
-}
+    /* Stats Bars */
+    .stats-row { margin-bottom: 14px; }
+    .stats-label { font-size: 14px; margin-bottom: 6px; display: flex; justify-content: space-between; color: #444; }
+    /* Highlight for MAX Stat */
+    .stat-max { color: #FF0000 !important; font-weight: 800 !important; font-size: 16px !important; }
 
-/* -------------------------
-   GLASS CARD
----------------------------*/
-.glass-box {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  backdrop-filter: blur(14px);
-  border-radius: 18px;
-  padding: 20px;
-  margin-bottom: 22px;
-  box-shadow: 0 0 18px rgba(0,0,0,0.35);
-}
+    .progress-bg { background: #E1E8F5; height: 12px; border-radius: 6px; overflow: hidden; }
+    .progress-fill { background: linear-gradient(90deg, #00C6FF, #0072FF); height: 100%; width: 0%; transition: width 1s ease; border-radius: 6px; }
 
-/* -------------------------
-   HEADER BANNER
----------------------------*/
-.banner-box {
-  width: 100%;
-  height: 180px;
-  border-radius: 16px;
-  background: url("https://lh5.googleusercontent.com/d/1ayffpS4-QVA61ho7Jvcux9TNevIeM1WQ") center/cover no-repeat,
-              linear-gradient(135deg, #045DE9 0%, #0a1e49 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  margin-bottom: 20px;
-  position: relative;
-  overflow: hidden;
-}
+    /* Choice Buttons (Radio Style) */
+    .choice-group { display: flex; flex-direction: column; gap: 12px; }
+    .choice-btn { 
+      border: 2px solid #E1E8F5; padding: 18px; border-radius: 14px; background: white; cursor: pointer; text-align: left;
+      transition: all 0.2s; position: relative;
+    }
+    .choice-btn:hover { border-color: #00C6FF; }
+    .choice-btn.active { border-color: #0072FF; background: #F0F9FF; box-shadow: 0 4px 12px rgba(0,114,255,0.15); }
+    .choice-btn.active::after { content: '\f00c'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #0072FF; font-size: 18px; }
+    .choice-title { font-weight: 700; font-size: 16px; display: block; color: #003B8E; margin-bottom: 4px; }
+    .choice-desc { font-size: 13px; color: #666; font-weight: 400; }
 
-.banner-box::after {
-  content: "";
-  position: absolute;
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  background: rgba(0,150,255,0.25);
-  filter: blur(60px);
-  top: -50px;
-  right: -70px;
-}
+    /* Form & Labels */
+    .form-group { margin-bottom: 18px; }
+    .input-label { display: block; margin-bottom: 8px; font-size: 15px; font-weight: 600; color: #003B8E; }
+    .required { color: #FF4D4F; margin-left: 4px; font-size: 16px; }
+    
+    input, select { 
+      width: 100%; padding: 16px; border: 1px solid #E1E8F5; border-radius: 12px; font-size: 16px; font-family: "Prompt"; 
+      background: #FAFCFF; box-sizing: border-box; outline: none; transition: 0.3s; color: #333;
+    }
+    input:focus, select:focus { border-color: #0072FF; background: white; box-shadow: 0 0 0 3px rgba(0,114,255,0.1); }
+    
+    /* CTA Button */
+    .submit-btn {
+      width: 100%; background: linear-gradient(90deg, #0072FF, #00C6FF); color: white; border: none; padding: 18px;
+      font-size: 18px; font-weight: 700; border-radius: 50px; cursor: pointer; box-shadow: 0 8px 25px rgba(0,114,255,0.35);
+      margin-top: 15px; transition: transform 0.2s;
+    }
+    .submit-btn:active { transform: scale(0.98); }
+    .price-tag { text-align: center; margin-top: 12px; font-size: 14px; color: #666; }
+    
+    /* Loading Overlay */
+    #loading { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.95); z-index:999; flex-direction:column; justify-content:center; align-items:center; }
+    .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #0072FF; border-radius: 50%; width: 45px; height: 45px; animation: spin 0.8s linear infinite; margin-bottom: 20px; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-.banner-title {
-  z-index: 5;
-  font-size: 22px;
-  font-weight: 700;
-}
-
-/* -------------------------
-   TITLES
----------------------------*/
-.section-title {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-/* -------------------------
-   BUTTON SELECTORS
----------------------------*/
-.choice-btn {
-  width: 100%;
-  padding: 14px;
-  margin: 6px 0;
-  border-radius: 12px;
-  border: 1px solid #2f61c4;
-  background: rgba(255,255,255,0.05);
-  color: #bcd9ff;
-  font-size: 15px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.choice-btn.active {
-  background: linear-gradient(90deg,#0a5cff,#009dff);
-  color: #fff;
-  border-color: transparent;
-  box-shadow: 0 0 12px rgba(0,145,255,0.6);
-}
-
-/* -------------------------
-   INPUT FIELDS
----------------------------*/
-input, select {
-  width: 100%;
-  padding: 14px;
-  margin: 6px 0;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 10px;
-  color: white;
-  font-size: 15px;
-}
-
-input::placeholder {
-  color: #9bb5d1;
-}
-
-#position-other {
-  display: none;
-}
-
-/* -------------------------
-   SUBMIT BUTTON
----------------------------*/
-.next-btn {
-  width: 100%;
-  padding: 15px;
-  margin-top: 12px;
-  background: linear-gradient(90deg,#006CFF,#00A2FF);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 17px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 0 15px rgba(0,150,255,0.5);
-}
-
-/* -------------------------
-   PROGRESS BAR
----------------------------*/
-.bar {
-  height: 10px;
-  background: rgba(255,255,255,0.12);
-  border-radius: 6px;
-  margin-top: 5px;
-  overflow: hidden;
-}
-
-.bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg,#0a8bff,#00eaff);
-  width: 0%;
-  border-radius: 6px;
-  transition: width 0.4s ease;
-}
-
-/* -------------------------
-   POPUP ALERT
----------------------------*/
-.popup {
-  position: fixed;
-  top: -200px;
-  left: 0; right: 0;
-  margin: auto;
-  width: 80%;
-  max-width: 360px;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
-  backdrop-filter: blur(14px);
-  padding: 18px;
-  text-align: center;
-  border-radius: 14px;
-  color: #fff;
-  box-shadow: 0 0 14px rgba(0,0,0,0.4);
-  transition: 0.35s ease;
-  z-index: 9999;
-}
-.popup.show {
-  top: 30px;
-}
-</style>
+  </style>
 </head>
-
 <body>
 
-<div class="container">
+  <!-- Loading Screen -->
+  <div id="loading"><div class="spinner"></div><div style="font-weight: 600; color: #003B8E;">กำลังประมวลผล...</div></div>
 
-  <!-- Banner -->
-  <div class="banner-box">
-    <div class="banner-title">AI Content Bootcamp (5 Days)</div>
+  <div class="container">
+    <!-- Banner -->
+    <div class="banner">
+      <div class="logo-badge">Chokdee Content</div>
+      <h1>AI Content Bootcamp</h1>
+      <p>(5 Days) สร้างคอนเทนต์ + ใช้ AI จับมือทำ</p>
+    </div>
+
+    <!-- Platforms (Updated to match Agenda) -->
+    <div class="tech-grid">
+      <div class="tech-badge">Canva</div>
+      <div class="tech-badge">Keynote</div>
+      <div class="tech-badge">CapCut</div>
+      <div class="tech-badge">Numbers</div>
+      <div class="tech-badge">ChatGPT</div>
+      <div class="tech-badge">Gemini</div>
+      <div class="tech-badge">Facebook</div>
+      <div class="tech-badge">Digital Office</div>
+      <div class="tech-badge">LINE OA</div>
+    </div>
+
+    <!-- AGENDA Section (Toggle) -->
+    <div style="margin-bottom: 25px;"></div>
+    <button class="agenda-toggle-btn" onclick="toggleAgenda()">
+      <span>⭐️ AGENDA สรุป 5 วัน</span>
+      <i class="fas fa-chevron-down" id="agenda-icon"></i>
+    </button>
+    <div class="agenda-content" id="agenda-box">
+      <ul class="agenda-list">
+        <li>
+          <span class="day-badge">Day 1</span>
+          <span><b>Canva / Keynote</b> – เทคนิคคอนเทนต์ + ทำภาพ</span>
+        </li>
+        <li>
+          <span class="day-badge">Day 2</span>
+          <span><b>CapCut / Numbers</b> – ทำคลิป + ระบบงาน + เนื้อหาขาย</span>
+        </li>
+        <li>
+          <span class="day-badge">Day 3</span>
+          <span><b>ChatGPT / Gemini</b> – AI Content</span>
+        </li>
+        <li>
+          <span class="day-badge">Day 4</span>
+          <span><b>Facebook / Digital Office</b> – ลงคอนเทนต์จริง</span>
+        </li>
+        <li>
+          <span class="day-badge">Day 5</span>
+          <span><b>LINE OA</b> – Broadcast + Rich Menu + สรุปการเรียน</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Stats Dashboard -->
+    <div class="section-title">📊 สถิติการเลือกเรียน (Real-time)</div>
+    <div class="card">
+      <div class="stats-row">
+        <div class="stats-label"><span>8–12 ม.ค.</span> <span id="txt-dayA">0%</span></div>
+        <div class="progress-bg"><div class="progress-fill" id="bar-dayA"></div></div>
+      </div>
+      <div class="stats-row">
+        <div class="stats-label"><span>13–17 ม.ค.</span> <span id="txt-dayB">0%</span></div>
+        <div class="progress-bg"><div class="progress-fill" id="bar-dayB"></div></div>
+      </div>
+      <div style="margin: 20px 0; border-top: 1px dashed #E1E8F5;"></div>
+      <div class="stats-row">
+        <div class="stats-label"><span>19:00 - 21:00</span> <span id="txt-time1">0%</span></div>
+        <div class="progress-bg"><div class="progress-fill" id="bar-time1"></div></div>
+      </div>
+      <div class="stats-row">
+        <div class="stats-label"><span>20:00 - 22:00</span> <span id="txt-time2">0%</span></div>
+        <div class="progress-bg"><div class="progress-fill" id="bar-time2"></div></div>
+      </div>
+      <div style="text-align: center; font-size: 13px; color: #888; margin-top: 15px; background: #f9f9f9; padding: 8px; border-radius: 8px;">
+        ผู้ลงทะเบียนแล้วทั้งหมด: <b id="total-reg" style="color: #003B8E;">...</b> ท่าน
+      </div>
+    </div>
+
+    <!-- Selection Form -->
+    <div class="section-title" id="section-day">📅 เลือกวันเรียน <span class="required">*</span></div>
+    
+    <div class="choice-group" style="margin-bottom: 20px;">
+      <div class="choice-btn" onclick="selectDay('A', this)">
+        <span class="choice-title">A) 8–12 มกราคม 2568</span>
+        <span class="choice-desc">วันพุธ – อาทิตย์</span>
+      </div>
+      <div class="choice-btn" onclick="selectDay('B', this)">
+        <span class="choice-title">B) 13–17 มกราคม 2568</span>
+        <span class="choice-desc">วันจันทร์ – ศุกร์</span>
+      </div>
+    </div>
+
+    <div class="section-title" id="section-time">⏰ เลือกเวลาเรียน <span class="required">*</span></div>
+    <div class="choice-group">
+      <div class="choice-btn" onclick="selectTime('19:00-21:00', this)">
+        <span class="choice-title">⏰ 19:00 – 21:00 น.</span>
+        <span class="choice-desc">ระยะเวลา 2 ชั่วโมง</span>
+      </div>
+      <div class="choice-btn" onclick="selectTime('20:00-22:00', this)">
+        <span class="choice-title">⏰ 20:00 – 22:00 น.</span>
+        <span class="choice-desc">ระยะเวลา 2 ชั่วโมง</span>
+      </div>
+    </div>
+
+    <!-- Personal Info -->
+    <div class="section-title">📝 ข้อมูลผู้สมัคร</div>
+    <div class="card">
+      <div class="form-group">
+        <label class="input-label">เบอร์โทรศัพท์ (10 หลัก) <span class="required">*</span></label>
+        <input type="tel" id="phone" placeholder="กรอกเบอร์โทรศัพท์ (ตัวเลขเท่านั้น)" maxlength="10" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+      </div>
+      
+      <div class="form-group">
+        <label class="input-label">ชื่อ - นามสกุล <span class="required">*</span></label>
+        <input type="text" id="fullname" placeholder="กรอกชื่อและนามสกุล">
+      </div>
+      
+      <div class="form-group">
+        <label class="input-label">อีเมล <span class="required">*</span></label>
+        <input type="email" id="email" placeholder="ตัวอย่าง: name@example.com">
+      </div>
+      
+      <div class="form-group">
+        <label class="input-label">LINE ID <span class="required">*</span></label>
+        <input type="text" id="lineid" placeholder="กรอก LINE ID ของท่าน">
+      </div>
+      
+      <div class="form-group">
+        <label class="input-label">สาขา <span class="required">*</span></label>
+        <input type="text" id="branch" placeholder="ระบุสาขา">
+      </div>
+      
+      <div class="form-group">
+        <label class="input-label">ตำแหน่ง <span class="required">*</span></label>
+        <select id="position" onchange="toggleOtherPosition()">
+          <option value="">-- กรุณาเลือกตำแหน่ง --</option>
+          <option>ตัวแทน</option>
+          <option>ผู้บริหารหน่วย</option>
+          <option>ผู้บริหารศูนย์</option>
+          <option>ผู้จัดการศูนย์</option>
+          <option>ผู้บริหารภาค</option>
+          <option>ผู้จัดการภาค</option>
+          <option>ผู้จัดการภาคอาวุโส</option>
+          <option>ผู้จัดการฝ่าย</option>
+          <option>อื่นๆ</option>
+        </select>
+      </div>
+
+      <!-- Other Position Input (Hidden by default) -->
+      <div class="form-group" id="other-position-group" style="display: none;">
+        <label class="input-label">ระบุตำแหน่ง <span class="required">*</span></label>
+        <input type="text" id="other_position" placeholder="กรอกตำแหน่งของคุณ">
+      </div>
+
+    </div>
+
+    <!-- Submit -->
+    <button class="submit-btn" onclick="submitForm()">ยืนยันข้อมูล & ไปชำระเงิน</button>
+    <div class="price-tag">ราคาจะคำนวณอัตโนมัติในหน้าถัดไป</div>
+
   </div>
 
-  <div class="glass-box">
-    <div class="section-title">เลือกวันเรียน</div>
-    <button class="choice-btn" id="dayA" onclick="selectDay('A')">A) 8–12 มกราคม</button>
-    <button class="choice-btn" id="dayB" onclick="selectDay('B')">B) 13–17 มกราคม</button>
+  <script>
+    let selectedData = { day: "", time: "" };
 
-    <div class="section-title">เลือกเวลาเรียน</div>
-    <button class="choice-btn" id="time1" onclick="selectTime('19-21')">19:00 – 21:00 น.</button>
-    <button class="choice-btn" id="time2" onclick="selectTime('20-22')">20:00 – 22:00 น.</button>
-  </div>
+    // Init: Load Stats from Server (GAS)
+    window.onload = function() {
+      // เรียกฟังก์ชัน getStats() จาก Code.gs
+      google.script.run.withSuccessHandler(renderStats).getStats();
+    };
 
-  <div class="glass-box">
-    <div class="section-title">ข้อมูลผู้สมัคร</div>
+    function renderStats(stats) {
+      if (!stats) return; // ป้องกัน error กรณีไม่มีข้อมูล
 
-    <input id="fullname" type="text" placeholder="ชื่อ - นามสกุล">
-    <input id="phone" type="tel" pattern="[0-9]*" inputmode="numeric" placeholder="เบอร์โทร">
-    <input id="email" type="email" placeholder="อีเมล">
-    <input id="lineid" type="text" placeholder="LINE ID">
-    <input id="branch" type="text" placeholder="สาขา">
+      document.getElementById("total-reg").innerText = stats.total;
+      updateBar("bar-dayA", "txt-dayA", stats.dayA, stats.total);
+      updateBar("bar-dayB", "txt-dayB", stats.dayB, stats.total);
+      updateBar("bar-time1", "txt-time1", stats.time1, stats.total);
+      updateBar("bar-time2", "txt-time2", stats.time2, stats.total);
 
-    <select id="position" onchange="toggleOtherPosition()">
-      <option value="">เลือกตำแหน่ง</option>
-      <option>ตัวแทน</option>
-      <option>ผู้บริหารหน่วย</option>
-      <option>ผู้บริหารศูนย์</option>
-      <option>ผู้จัดการศูนย์</option>
-      <option>ผู้บริหารภาค</option>
-      <option>ผู้จัดการภาค</option>
-      <option>ผู้จัดการภาคอาวุโส</option>
-      <option>ผู้จัดการฝ่าย</option>
-      <option value="other">อื่นๆ</option>
-    </select>
+      // Highlight logic for MAX values
+      // Reset first
+      ['txt-dayA', 'txt-dayB', 'txt-time1', 'txt-time2'].forEach(id => {
+        document.getElementById(id).classList.remove('stat-max');
+      });
 
-    <input id="position-other" type="text" placeholder="ระบุชื่อตำแหน่ง">
+      // Highlight Days
+      if (stats.dayA > stats.dayB) {
+        document.getElementById('txt-dayA').classList.add('stat-max');
+      } else if (stats.dayB > stats.dayA) {
+        document.getElementById('txt-dayB').classList.add('stat-max');
+      }
 
-    <button class="next-btn" onclick="submitForm()">ไปชำระเงิน</button>
-  </div>
-</div>
+      // Highlight Times
+      if (stats.time1 > stats.time2) {
+        document.getElementById('txt-time1').classList.add('stat-max');
+      } else if (stats.time2 > stats.time1) {
+        document.getElementById('txt-time2').classList.add('stat-max');
+      }
+    }
 
-<!-- Popup -->
-<div id="popup" class="popup">กรุณากรอกข้อมูลให้ครบถ้วน</div>
+    function updateBar(barId, txtId, val, total) {
+      let pct = total === 0 ? 0 : Math.round((val / total) * 100);
+      document.getElementById(barId).style.width = pct + "%";
+      document.getElementById(txtId).innerText = pct + "% (" + val + " คน)";
+    }
+
+    function toggleAgenda() {
+      const box = document.getElementById('agenda-box');
+      const icon = document.getElementById('agenda-icon');
+      if (box.classList.contains('show')) {
+        box.classList.remove('show');
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+      } else {
+        box.classList.add('show');
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+      }
+    }
+
+    function selectDay(val, el) {
+      const mappedValue = val === 'A' ? '8–12 มกราคม 2568' : '13–17 มกราคม 2568';
+      const group = el.closest('.choice-group');
+
+      // Toggle Off
+      if (el.classList.contains('active')) {
+        selectedData.day = "";
+        el.classList.remove('active');
+      } 
+      // Switch
+      else {
+        group.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
+        selectedData.day = mappedValue;
+      }
+    }
+
+    function selectTime(val, el) {
+      const group = el.closest('.choice-group');
+
+      // Toggle Off
+      if (el.classList.contains('active')) {
+        selectedData.time = "";
+        el.classList.remove('active');
+      } 
+      // Switch
+      else {
+        group.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
+        selectedData.time = val;
+      }
+    }
+
+    function toggleOtherPosition() {
+      const positionSelect = document.getElementById('position');
+      const otherGroup = document.getElementById('other-position-group');
+      const otherInput = document.getElementById('other_position');
+      
+      if (positionSelect.value === 'อื่นๆ') {
+        otherGroup.style.display = 'block';
+      } else {
+        otherGroup.style.display = 'none';
+        otherInput.value = ''; 
+      }
+    }
+
+    function submitForm() {
+      const phoneInput = document.getElementById('phone').value.trim();
+      let positionValue = document.getElementById('position').value;
+      const otherPositionValue = document.getElementById('other_position').value.trim();
+
+      if (positionValue === 'อื่นๆ') {
+        positionValue = otherPositionValue;
+      }
+
+      const form = {
+        fullname: document.getElementById('fullname').value.trim(),
+        phone: phoneInput,
+        email: document.getElementById('email').value.trim(),
+        lineid: document.getElementById('lineid').value.trim(),
+        branch: document.getElementById('branch').value.trim(),
+        position: positionValue,
+        day: selectedData.day,
+        time: selectedData.time
+      };
+
+      // Validation & Scroll
+      if(!form.day) {
+        alert("⚠️ กรุณาเลือก 'วันเรียน' ที่สะดวก");
+        document.getElementById('section-day').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      if(!form.time) {
+        alert("⚠️ กรุณาเลือก 'เวลาเรียน' ที่สะดวก");
+        document.getElementById('section-time').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      
+      if(!form.phone || form.phone.length !== 10) {
+        alert("⚠️ กรุณากรอก 'เบอร์โทรศัพท์' ให้ครบ 10 หลัก (ตัวเลขเท่านั้น)");
+        document.getElementById('phone').focus();
+        return;
+      }
+
+      if(!form.fullname) {
+        alert("⚠️ กรุณากรอก 'ชื่อ - นามสกุล'");
+        document.getElementById('fullname').focus();
+        return;
+      }
+      if(!form.email) {
+        alert("⚠️ กรุณากรอก 'อีเมล'");
+        document.getElementById('email').focus();
+        return;
+      }
+      if(!form.lineid) {
+        alert("⚠️ กรุณากรอก 'LINE ID'");
+        document.getElementById('lineid').focus();
+        return;
+      }
+      if(!form.branch) {
+        alert("⚠️ กรุณาระบุ 'สาขา'");
+        document.getElementById('branch').focus();
+        return;
+      }
+      
+      if(!document.getElementById('position').value) {
+        alert("⚠️ กรุณาเลือก 'ตำแหน่ง'");
+        document.getElementById('position').focus();
+        return;
+      }
+      if(document.getElementById('position').value === 'อื่นๆ' && !otherPositionValue) {
+        alert("⚠️ กรุณาระบุ 'ตำแหน่ง' ของท่านในช่องว่าง");
+        document.getElementById('other_position').focus();
+        return;
+      }
+
+      document.getElementById('loading').style.display = 'flex';
+      
+      // ส่งข้อมูลไปยัง Google Apps Script (Production Only)
+      google.script.run.withSuccessHandler(function(res) {
+        if(res.status === "ALREADY_PAID") {
+          window.location.href = "?page=success"; 
+        } else {
+          window.location.href = "?page=payment&rowid=" + res.rowid + "&price=" + res.price;
+        }
+      }).registerUser(form);
+    }
+  </script>
+</body>
+</html>
