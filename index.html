@@ -7,127 +7,49 @@
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    /* ---------------- THEME & LAYOUT ---------------- */
+    /* ... (CSS ส่วนเดิมทั้งหมด เหมือนฉบับล่าสุดของคุณ) ... */
+    /* คงไว้เหมือนเดิมเพื่อความสวยงามตามที่คุณต้องการ */
     body { font-family: "Prompt", sans-serif; background: #F0F6FF; color: #003B8E; margin: 0; padding-bottom: 40px; }
-    
-    /* ปรับ Container ให้กว้างขึ้นเล็กน้อยเพื่อให้ดูเต็มจอมากขึ้นในมือถือ */
     .container { max-width: 550px; margin: auto; padding: 20px; box-sizing: border-box; }
-    
-    /* Header & Banner */
-    .banner { 
-      width: 100%; 
-      border-radius: 16px; 
-      overflow: hidden; 
-      margin-bottom: 25px; 
-      box-shadow: 0 4px 20px rgba(0,59,142,0.2);
-      background: linear-gradient(135deg, #00C6FF, #0072FF); 
-      color: white; 
-      text-align: center; 
-      padding: 40px 20px;
-      box-sizing: border-box; /* สำคัญ: รวม padding ใน width */
-    }
+    .banner { width: 100%; border-radius: 16px; overflow: hidden; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,59,142,0.2); background: linear-gradient(135deg, #00C6FF, #0072FF); color: white; text-align: center; padding: 40px 20px; box-sizing: border-box; }
     .banner h1 { margin: 0; font-size: 26px; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.1); line-height: 1.3; }
     .banner p { margin: 8px 0 0; opacity: 0.95; font-size: 15px; font-weight: 300; }
     .logo-badge { background: rgba(255,255,255,0.25); padding: 6px 14px; border-radius: 20px; font-size: 13px; margin-bottom: 12px; display: inline-block; backdrop-filter: blur(5px); }
-
-    /* Cards */
     .card { background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); margin-bottom: 20px; }
     .section-title { font-size: 18px; font-weight: 700; margin: 30px 0 12px; padding-left: 10px; border-left: 5px solid #00C6FF; line-height: 1; color: #003B8E; }
-    
-    /* Tech Icons */
     .tech-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 10px; }
     .tech-badge { background: white; border: 1px solid #E6F7FF; color: #0072FF; padding: 8px 14px; border-radius: 50px; font-size: 13px; font-weight: 500; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
-
-    /* Agenda Toggle Box */
-    .agenda-toggle-btn {
-      background: white;
-      color: #003B8E;
-      width: 100%;
-      padding: 15px 20px;
-      border: none;
-      border-radius: 12px;
-      font-family: "Prompt", sans-serif;
-      font-size: 16px;
-      font-weight: 600;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      transition: all 0.3s ease;
-    }
+    .agenda-toggle-btn { background: white; color: #003B8E; width: 100%; padding: 15px 20px; border: none; border-radius: 12px; font-family: "Prompt", sans-serif; font-size: 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: all 0.3s ease; }
     .agenda-toggle-btn:hover { background: #f9fcff; box-shadow: 0 6px 15px rgba(0,0,0,0.08); }
-    .agenda-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease-out;
-      background: white;
-      border-radius: 0 0 12px 12px;
-      margin-top: -5px; /* เชื่อมกับปุ่ม */
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    }
-    .agenda-content.show { max-height: 500px; /* ค่าประมาณความสูง */ }
+    .agenda-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; background: white; border-radius: 0 0 12px 12px; margin-top: -5px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .agenda-content.show { max-height: 500px; }
     .agenda-list { padding: 20px; list-style: none; margin: 0; }
-    .agenda-list li { 
-      margin-bottom: 12px; 
-      padding-bottom: 12px; 
-      border-bottom: 1px dashed #eee; 
-      font-size: 14px; 
-      display: flex;
-      align-items: flex-start;
-    }
+    .agenda-list li { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed #eee; font-size: 14px; display: flex; align-items: flex-start; }
     .agenda-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-    .day-badge { 
-      background: #E6F7FF; color: #0072FF; font-weight: 700; padding: 2px 8px; border-radius: 6px; 
-      margin-right: 10px; font-size: 12px; min-width: 45px; text-align: center;
-    }
-
-    /* Stats Bars */
+    .day-badge { background: #E6F7FF; color: #0072FF; font-weight: 700; padding: 2px 8px; border-radius: 6px; margin-right: 10px; font-size: 12px; min-width: 45px; text-align: center; }
     .stats-row { margin-bottom: 14px; }
     .stats-label { font-size: 14px; margin-bottom: 6px; display: flex; justify-content: space-between; color: #444; }
-    /* Highlight for MAX Stat */
     .stat-max { color: #FF0000 !important; font-weight: 800 !important; font-size: 16px !important; }
-
     .progress-bg { background: #E1E8F5; height: 12px; border-radius: 6px; overflow: hidden; }
     .progress-fill { background: linear-gradient(90deg, #00C6FF, #0072FF); height: 100%; width: 0%; transition: width 1s ease; border-radius: 6px; }
-
-    /* Choice Buttons (Radio Style) */
     .choice-group { display: flex; flex-direction: column; gap: 12px; }
-    .choice-btn { 
-      border: 2px solid #E1E8F5; padding: 18px; border-radius: 14px; background: white; cursor: pointer; text-align: left;
-      transition: all 0.2s; position: relative;
-    }
+    .choice-btn { border: 2px solid #E1E8F5; padding: 18px; border-radius: 14px; background: white; cursor: pointer; text-align: left; transition: all 0.2s; position: relative; }
     .choice-btn:hover { border-color: #00C6FF; }
     .choice-btn.active { border-color: #0072FF; background: #F0F9FF; box-shadow: 0 4px 12px rgba(0,114,255,0.15); }
     .choice-btn.active::after { content: '\f00c'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #0072FF; font-size: 18px; }
     .choice-title { font-weight: 700; font-size: 16px; display: block; color: #003B8E; margin-bottom: 4px; }
     .choice-desc { font-size: 13px; color: #666; font-weight: 400; }
-
-    /* Form & Labels */
     .form-group { margin-bottom: 18px; }
     .input-label { display: block; margin-bottom: 8px; font-size: 15px; font-weight: 600; color: #003B8E; }
     .required { color: #FF4D4F; margin-left: 4px; font-size: 16px; }
-    
-    input, select { 
-      width: 100%; padding: 16px; border: 1px solid #E1E8F5; border-radius: 12px; font-size: 16px; font-family: "Prompt"; 
-      background: #FAFCFF; box-sizing: border-box; outline: none; transition: 0.3s; color: #333;
-    }
+    input, select { width: 100%; padding: 16px; border: 1px solid #E1E8F5; border-radius: 12px; font-size: 16px; font-family: "Prompt"; background: #FAFCFF; box-sizing: border-box; outline: none; transition: 0.3s; color: #333; }
     input:focus, select:focus { border-color: #0072FF; background: white; box-shadow: 0 0 0 3px rgba(0,114,255,0.1); }
-    
-    /* CTA Button */
-    .submit-btn {
-      width: 100%; background: linear-gradient(90deg, #0072FF, #00C6FF); color: white; border: none; padding: 18px;
-      font-size: 18px; font-weight: 700; border-radius: 50px; cursor: pointer; box-shadow: 0 8px 25px rgba(0,114,255,0.35);
-      margin-top: 15px; transition: transform 0.2s;
-    }
+    .submit-btn { width: 100%; background: linear-gradient(90deg, #0072FF, #00C6FF); color: white; border: none; padding: 18px; font-size: 18px; font-weight: 700; border-radius: 50px; cursor: pointer; box-shadow: 0 8px 25px rgba(0,114,255,0.35); margin-top: 15px; transition: transform 0.2s; }
     .submit-btn:active { transform: scale(0.98); }
     .price-tag { text-align: center; margin-top: 12px; font-size: 14px; color: #666; }
-    
-    /* Loading Overlay */
     #loading { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.95); z-index:999; flex-direction:column; justify-content:center; align-items:center; }
     .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #0072FF; border-radius: 50%; width: 45px; height: 45px; animation: spin 0.8s linear infinite; margin-bottom: 20px; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
   </style>
 </head>
 <body>
@@ -136,14 +58,13 @@
   <div id="loading"><div class="spinner"></div><div style="font-weight: 600; color: #003B8E;">กำลังประมวลผล...</div></div>
 
   <div class="container">
-    <!-- Banner -->
     <div class="banner">
       <div class="logo-badge">Chokdee Content</div>
       <h1>AI Content Bootcamp</h1>
       <p>(5 Days) สร้างคอนเทนต์ + ใช้ AI จับมือทำ</p>
     </div>
 
-    <!-- Platforms (Updated to match Agenda) -->
+    <!-- Platforms -->
     <div class="tech-grid">
       <div class="tech-badge">Canva</div>
       <div class="tech-badge">Keynote</div>
@@ -156,7 +77,7 @@
       <div class="tech-badge">LINE OA</div>
     </div>
 
-    <!-- AGENDA Section (Toggle) -->
+    <!-- AGENDA -->
     <div style="margin-bottom: 25px;"></div>
     <button class="agenda-toggle-btn" onclick="toggleAgenda()">
       <span>⭐️ AGENDA สรุป 5 วัน</span>
@@ -164,108 +85,45 @@
     </button>
     <div class="agenda-content" id="agenda-box">
       <ul class="agenda-list">
-        <li>
-          <span class="day-badge">Day 1</span>
-          <span><b>Canva / Keynote</b> – เทคนิคคอนเทนต์ + ทำภาพ</span>
-        </li>
-        <li>
-          <span class="day-badge">Day 2</span>
-          <span><b>CapCut / Numbers</b> – ทำคลิป + ระบบงาน + เนื้อหาขาย</span>
-        </li>
-        <li>
-          <span class="day-badge">Day 3</span>
-          <span><b>ChatGPT / Gemini</b> – AI Content</span>
-        </li>
-        <li>
-          <span class="day-badge">Day 4</span>
-          <span><b>Facebook / Digital Office</b> – ลงคอนเทนต์จริง</span>
-        </li>
-        <li>
-          <span class="day-badge">Day 5</span>
-          <span><b>LINE OA</b> – Broadcast + Rich Menu + สรุปการเรียน</span>
-        </li>
+        <li><span class="day-badge">Day 1</span><span><b>Canva / Keynote</b> – เทคนิคคอนเทนต์ + ทำภาพ</span></li>
+        <li><span class="day-badge">Day 2</span><span><b>CapCut / Numbers</b> – ทำคลิป + ระบบงาน + เนื้อหาขาย</span></li>
+        <li><span class="day-badge">Day 3</span><span><b>ChatGPT / Gemini</b> – AI Content</span></li>
+        <li><span class="day-badge">Day 4</span><span><b>Facebook / Digital Office</b> – ลงคอนเทนต์จริง</span></li>
+        <li><span class="day-badge">Day 5</span><span><b>LINE OA</b> – Broadcast + Rich Menu + สรุปการเรียน</span></li>
       </ul>
     </div>
 
-    <!-- Stats Dashboard -->
+    <!-- Stats -->
     <div class="section-title">📊 สถิติการเลือกเรียน (Real-time)</div>
     <div class="card">
-      <div class="stats-row">
-        <div class="stats-label"><span>8–12 ม.ค.</span> <span id="txt-dayA">0%</span></div>
-        <div class="progress-bg"><div class="progress-fill" id="bar-dayA"></div></div>
-      </div>
-      <div class="stats-row">
-        <div class="stats-label"><span>13–17 ม.ค.</span> <span id="txt-dayB">0%</span></div>
-        <div class="progress-bg"><div class="progress-fill" id="bar-dayB"></div></div>
-      </div>
+      <div class="stats-row"><div class="stats-label"><span>8–12 ม.ค.</span> <span id="txt-dayA">0%</span></div><div class="progress-bg"><div class="progress-fill" id="bar-dayA"></div></div></div>
+      <div class="stats-row"><div class="stats-label"><span>13–17 ม.ค.</span> <span id="txt-dayB">0%</span></div><div class="progress-bg"><div class="progress-fill" id="bar-dayB"></div></div></div>
       <div style="margin: 20px 0; border-top: 1px dashed #E1E8F5;"></div>
-      <div class="stats-row">
-        <div class="stats-label"><span>19:00 - 21:00</span> <span id="txt-time1">0%</span></div>
-        <div class="progress-bg"><div class="progress-fill" id="bar-time1"></div></div>
-      </div>
-      <div class="stats-row">
-        <div class="stats-label"><span>20:00 - 22:00</span> <span id="txt-time2">0%</span></div>
-        <div class="progress-bg"><div class="progress-fill" id="bar-time2"></div></div>
-      </div>
-      <div style="text-align: center; font-size: 13px; color: #888; margin-top: 15px; background: #f9f9f9; padding: 8px; border-radius: 8px;">
-        ผู้ลงทะเบียนแล้วทั้งหมด: <b id="total-reg" style="color: #003B8E;">...</b> ท่าน
-      </div>
+      <div class="stats-row"><div class="stats-label"><span>19:00 - 21:00</span> <span id="txt-time1">0%</span></div><div class="progress-bg"><div class="progress-fill" id="bar-time1"></div></div></div>
+      <div class="stats-row"><div class="stats-label"><span>20:00 - 22:00</span> <span id="txt-time2">0%</span></div><div class="progress-bg"><div class="progress-fill" id="bar-time2"></div></div></div>
+      <div style="text-align: center; font-size: 13px; color: #888; margin-top: 15px; background: #f9f9f9; padding: 8px; border-radius: 8px;">ผู้ลงทะเบียนแล้วทั้งหมด: <b id="total-reg" style="color: #003B8E;">...</b> ท่าน</div>
     </div>
 
-    <!-- Selection Form -->
+    <!-- Form -->
     <div class="section-title" id="section-day">📅 เลือกวันเรียน <span class="required">*</span></div>
-    
     <div class="choice-group" style="margin-bottom: 20px;">
-      <div class="choice-btn" onclick="selectDay('A', this)">
-        <span class="choice-title">A) 8–12 มกราคม 2568</span>
-        <span class="choice-desc">วันพุธ – อาทิตย์</span>
-      </div>
-      <div class="choice-btn" onclick="selectDay('B', this)">
-        <span class="choice-title">B) 13–17 มกราคม 2568</span>
-        <span class="choice-desc">วันจันทร์ – ศุกร์</span>
-      </div>
+      <div class="choice-btn" onclick="selectDay('A', this)"><span class="choice-title">A) 8–12 มกราคม 2568</span><span class="choice-desc">วันพุธ – อาทิตย์</span></div>
+      <div class="choice-btn" onclick="selectDay('B', this)"><span class="choice-title">B) 13–17 มกราคม 2568</span><span class="choice-desc">วันจันทร์ – ศุกร์</span></div>
     </div>
 
     <div class="section-title" id="section-time">⏰ เลือกเวลาเรียน <span class="required">*</span></div>
     <div class="choice-group">
-      <div class="choice-btn" onclick="selectTime('19:00-21:00', this)">
-        <span class="choice-title">⏰ 19:00 – 21:00 น.</span>
-        <span class="choice-desc">ระยะเวลา 2 ชั่วโมง</span>
-      </div>
-      <div class="choice-btn" onclick="selectTime('20:00-22:00', this)">
-        <span class="choice-title">⏰ 20:00 – 22:00 น.</span>
-        <span class="choice-desc">ระยะเวลา 2 ชั่วโมง</span>
-      </div>
+      <div class="choice-btn" onclick="selectTime('19:00-21:00', this)"><span class="choice-title">⏰ 19:00 – 21:00 น.</span><span class="choice-desc">ระยะเวลา 2 ชั่วโมง</span></div>
+      <div class="choice-btn" onclick="selectTime('20:00-22:00', this)"><span class="choice-title">⏰ 20:00 – 22:00 น.</span><span class="choice-desc">ระยะเวลา 2 ชั่วโมง</span></div>
     </div>
 
-    <!-- Personal Info -->
     <div class="section-title">📝 ข้อมูลผู้สมัคร</div>
     <div class="card">
-      <div class="form-group">
-        <label class="input-label">เบอร์โทรศัพท์ (10 หลัก) <span class="required">*</span></label>
-        <input type="tel" id="phone" placeholder="กรอกเบอร์โทรศัพท์ (ตัวเลขเท่านั้น)" maxlength="10" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-      </div>
-      
-      <div class="form-group">
-        <label class="input-label">ชื่อ - นามสกุล <span class="required">*</span></label>
-        <input type="text" id="fullname" placeholder="กรอกชื่อและนามสกุล">
-      </div>
-      
-      <div class="form-group">
-        <label class="input-label">อีเมล <span class="required">*</span></label>
-        <input type="email" id="email" placeholder="ตัวอย่าง: name@example.com">
-      </div>
-      
-      <div class="form-group">
-        <label class="input-label">LINE ID <span class="required">*</span></label>
-        <input type="text" id="lineid" placeholder="กรอก LINE ID ของท่าน">
-      </div>
-      
-      <div class="form-group">
-        <label class="input-label">สาขา <span class="required">*</span></label>
-        <input type="text" id="branch" placeholder="ระบุสาขา">
-      </div>
-      
+      <div class="form-group"><label class="input-label">เบอร์โทรศัพท์ (10 หลัก) <span class="required">*</span></label><input type="tel" id="phone" placeholder="กรอกเบอร์โทรศัพท์ (ตัวเลขเท่านั้น)" maxlength="10" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')"></div>
+      <div class="form-group"><label class="input-label">ชื่อ - นามสกุล <span class="required">*</span></label><input type="text" id="fullname" placeholder="กรอกชื่อและนามสกุล"></div>
+      <div class="form-group"><label class="input-label">อีเมล <span class="required">*</span></label><input type="email" id="email" placeholder="ตัวอย่าง: name@example.com"></div>
+      <div class="form-group"><label class="input-label">LINE ID <span class="required">*</span></label><input type="text" id="lineid" placeholder="กรอก LINE ID ของท่าน"></div>
+      <div class="form-group"><label class="input-label">สาขา <span class="required">*</span></label><input type="text" id="branch" placeholder="ระบุสาขา"></div>
       <div class="form-group">
         <label class="input-label">ตำแหน่ง <span class="required">*</span></label>
         <select id="position" onchange="toggleOtherPosition()">
@@ -281,58 +139,46 @@
           <option>อื่นๆ</option>
         </select>
       </div>
-
-      <!-- Other Position Input (Hidden by default) -->
       <div class="form-group" id="other-position-group" style="display: none;">
         <label class="input-label">ระบุตำแหน่ง <span class="required">*</span></label>
         <input type="text" id="other_position" placeholder="กรอกตำแหน่งของคุณ">
       </div>
-
     </div>
 
-    <!-- Submit -->
     <button class="submit-btn" onclick="submitForm()">ยืนยันข้อมูล & ไปชำระเงิน</button>
     <div class="price-tag">ราคาจะคำนวณอัตโนมัติในหน้าถัดไป</div>
-
   </div>
 
   <script>
     let selectedData = { day: "", time: "" };
 
-    // Init: Load Stats from Server (GAS)
     window.onload = function() {
-      // เรียกฟังก์ชัน getStats() จาก Code.gs
-      google.script.run.withSuccessHandler(renderStats).getStats();
+      // เรียกฟังก์ชันจาก GAS (Production Only)
+      google.script.run
+        .withSuccessHandler(renderStats)
+        .withFailureHandler(onFailure) // ดัก Error ตรงนี้!
+        .getStats();
     };
 
-    function renderStats(stats) {
-      if (!stats) return; // ป้องกัน error กรณีไม่มีข้อมูล
+    function onFailure(error) {
+      document.getElementById('loading').style.display = 'none';
+      alert("เกิดข้อผิดพลาดในการเชื่อมต่อ Server: " + error.message);
+      console.error(error);
+    }
 
+    function renderStats(stats) {
+      if (!stats) return;
       document.getElementById("total-reg").innerText = stats.total;
       updateBar("bar-dayA", "txt-dayA", stats.dayA, stats.total);
       updateBar("bar-dayB", "txt-dayB", stats.dayB, stats.total);
       updateBar("bar-time1", "txt-time1", stats.time1, stats.total);
       updateBar("bar-time2", "txt-time2", stats.time2, stats.total);
-
-      // Highlight logic for MAX values
-      // Reset first
-      ['txt-dayA', 'txt-dayB', 'txt-time1', 'txt-time2'].forEach(id => {
-        document.getElementById(id).classList.remove('stat-max');
-      });
-
-      // Highlight Days
-      if (stats.dayA > stats.dayB) {
-        document.getElementById('txt-dayA').classList.add('stat-max');
-      } else if (stats.dayB > stats.dayA) {
-        document.getElementById('txt-dayB').classList.add('stat-max');
-      }
-
-      // Highlight Times
-      if (stats.time1 > stats.time2) {
-        document.getElementById('txt-time1').classList.add('stat-max');
-      } else if (stats.time2 > stats.time1) {
-        document.getElementById('txt-time2').classList.add('stat-max');
-      }
+      
+      ['txt-dayA', 'txt-dayB', 'txt-time1', 'txt-time2'].forEach(id => document.getElementById(id).classList.remove('stat-max'));
+      if (stats.dayA > stats.dayB) document.getElementById('txt-dayA').classList.add('stat-max');
+      else if (stats.dayB > stats.dayA) document.getElementById('txt-dayB').classList.add('stat-max');
+      if (stats.time1 > stats.time2) document.getElementById('txt-time1').classList.add('stat-max');
+      else if (stats.time2 > stats.time1) document.getElementById('txt-time2').classList.add('stat-max');
     }
 
     function updateBar(barId, txtId, val, total) {
@@ -344,71 +190,34 @@
     function toggleAgenda() {
       const box = document.getElementById('agenda-box');
       const icon = document.getElementById('agenda-icon');
-      if (box.classList.contains('show')) {
-        box.classList.remove('show');
-        icon.classList.remove('fa-chevron-up');
-        icon.classList.add('fa-chevron-down');
-      } else {
-        box.classList.add('show');
-        icon.classList.remove('fa-chevron-down');
-        icon.classList.add('fa-chevron-up');
-      }
+      if (box.classList.contains('show')) { box.classList.remove('show'); icon.classList.remove('fa-chevron-up'); icon.classList.add('fa-chevron-down'); }
+      else { box.classList.add('show'); icon.classList.remove('fa-chevron-down'); icon.classList.add('fa-chevron-up'); }
     }
 
     function selectDay(val, el) {
       const mappedValue = val === 'A' ? '8–12 มกราคม 2568' : '13–17 มกราคม 2568';
       const group = el.closest('.choice-group');
-
-      // Toggle Off
-      if (el.classList.contains('active')) {
-        selectedData.day = "";
-        el.classList.remove('active');
-      } 
-      // Switch
-      else {
-        group.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active'));
-        el.classList.add('active');
-        selectedData.day = mappedValue;
-      }
+      if (el.classList.contains('active')) { selectedData.day = ""; el.classList.remove('active'); } 
+      else { group.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); selectedData.day = mappedValue; }
     }
 
     function selectTime(val, el) {
       const group = el.closest('.choice-group');
-
-      // Toggle Off
-      if (el.classList.contains('active')) {
-        selectedData.time = "";
-        el.classList.remove('active');
-      } 
-      // Switch
-      else {
-        group.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active'));
-        el.classList.add('active');
-        selectedData.time = val;
-      }
+      if (el.classList.contains('active')) { selectedData.time = ""; el.classList.remove('active'); } 
+      else { group.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); selectedData.time = val; }
     }
 
     function toggleOtherPosition() {
-      const positionSelect = document.getElementById('position');
+      const pos = document.getElementById('position').value;
       const otherGroup = document.getElementById('other-position-group');
-      const otherInput = document.getElementById('other_position');
-      
-      if (positionSelect.value === 'อื่นๆ') {
-        otherGroup.style.display = 'block';
-      } else {
-        otherGroup.style.display = 'none';
-        otherInput.value = ''; 
-      }
+      if (pos === 'อื่นๆ') otherGroup.style.display = 'block'; else { otherGroup.style.display = 'none'; document.getElementById('other_position').value = ''; }
     }
 
     function submitForm() {
       const phoneInput = document.getElementById('phone').value.trim();
       let positionValue = document.getElementById('position').value;
       const otherPositionValue = document.getElementById('other_position').value.trim();
-
-      if (positionValue === 'อื่นๆ') {
-        positionValue = otherPositionValue;
-      }
+      if (positionValue === 'อื่นๆ') positionValue = otherPositionValue;
 
       const form = {
         fullname: document.getElementById('fullname').value.trim(),
@@ -421,66 +230,22 @@
         time: selectedData.time
       };
 
-      // Validation & Scroll
-      if(!form.day) {
-        alert("⚠️ กรุณาเลือก 'วันเรียน' ที่สะดวก");
-        document.getElementById('section-day').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        return;
-      }
-      if(!form.time) {
-        alert("⚠️ กรุณาเลือก 'เวลาเรียน' ที่สะดวก");
-        document.getElementById('section-time').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        return;
-      }
-      
-      if(!form.phone || form.phone.length !== 10) {
-        alert("⚠️ กรุณากรอก 'เบอร์โทรศัพท์' ให้ครบ 10 หลัก (ตัวเลขเท่านั้น)");
-        document.getElementById('phone').focus();
-        return;
-      }
-
-      if(!form.fullname) {
-        alert("⚠️ กรุณากรอก 'ชื่อ - นามสกุล'");
-        document.getElementById('fullname').focus();
-        return;
-      }
-      if(!form.email) {
-        alert("⚠️ กรุณากรอก 'อีเมล'");
-        document.getElementById('email').focus();
-        return;
-      }
-      if(!form.lineid) {
-        alert("⚠️ กรุณากรอก 'LINE ID'");
-        document.getElementById('lineid').focus();
-        return;
-      }
-      if(!form.branch) {
-        alert("⚠️ กรุณาระบุ 'สาขา'");
-        document.getElementById('branch').focus();
-        return;
-      }
-      
-      if(!document.getElementById('position').value) {
-        alert("⚠️ กรุณาเลือก 'ตำแหน่ง'");
-        document.getElementById('position').focus();
-        return;
-      }
-      if(document.getElementById('position').value === 'อื่นๆ' && !otherPositionValue) {
-        alert("⚠️ กรุณาระบุ 'ตำแหน่ง' ของท่านในช่องว่าง");
-        document.getElementById('other_position').focus();
-        return;
-      }
+      if(!form.day) { alert("⚠️ กรุณาเลือก 'วันเรียน' ที่สะดวก"); document.getElementById('section-day').scrollIntoView({behavior:'smooth',block:'center'}); return; }
+      if(!form.time) { alert("⚠️ กรุณาเลือก 'เวลาเรียน' ที่สะดวก"); document.getElementById('section-time').scrollIntoView({behavior:'smooth',block:'center'}); return; }
+      if(!form.phone || form.phone.length !== 10) { alert("⚠️ เบอร์โทรต้องมี 10 หลัก"); document.getElementById('phone').focus(); return; }
+      if(!form.fullname || !form.email || !form.lineid || !form.branch || !positionValue) { alert("⚠️ กรุณากรอกข้อมูลให้ครบทุกช่อง"); return; }
+      if(document.getElementById('position').value === 'อื่นๆ' && !otherPositionValue) { alert("⚠️ ระบุตำแหน่งของคุณ"); document.getElementById('other_position').focus(); return; }
 
       document.getElementById('loading').style.display = 'flex';
       
-      // ส่งข้อมูลไปยัง Google Apps Script (Production Only)
-      google.script.run.withSuccessHandler(function(res) {
-        if(res.status === "ALREADY_PAID") {
-          window.location.href = "?page=success"; 
-        } else {
-          window.location.href = "?page=payment&rowid=" + res.rowid + "&price=" + res.price;
-        }
-      }).registerUser(form);
+      // เรียก GAS พร้อม Failure Handler เพื่อแก้ปัญหาหน้าเว็บหมุนค้าง
+      google.script.run
+        .withSuccessHandler(function(res) {
+          if(res.status === "ALREADY_PAID") window.location.href = "?page=success"; 
+          else window.location.href = "?page=payment&rowid=" + res.rowid + "&price=" + res.price;
+        })
+        .withFailureHandler(onFailure) // สำคัญมาก!
+        .registerUser(form);
     }
   </script>
 </body>
