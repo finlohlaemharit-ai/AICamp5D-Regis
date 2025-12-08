@@ -41,17 +41,18 @@
       เข้ากลุ่มไลน์ (Click)
     </a>
 
-    <!-- ปุ่มกลับหน้าแรก (วิ่งไปที่ Index ของ GAS Web App) -->
+    <!-- ปุ่มกลับหน้าแรก -->
     <a href="#" id="homeLink" class="line-btn btn-sec">
       ลงทะเบียนเพิ่ม
     </a>
   </div>
 
   <script>
-    // ⚠️ ใส่ URL Web App ของคุณ
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwS3HFz65lBCo9llQJV6Wv-ySvfaYLHECX6v1qswQAHjAtpCsIyGYO_gYQ2uoIEMmB3lw/exec";
     
-    document.getElementById('homeLink').href = WEB_APP_URL + "?page=index";
+    window.onload = function() {
+        document.getElementById('homeLink').href = WEB_APP_URL + "?page=index";
+    }
   </script>
 </body>
 </html>
