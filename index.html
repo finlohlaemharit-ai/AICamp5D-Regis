@@ -93,19 +93,23 @@
       height: 100px;
       display: block;
     }
+    /* วงกลมขอบ (Outline) */
     .checkmark-circle {
       stroke-dasharray: 166;
       stroke-dashoffset: 166;
       stroke-width: 2;
       stroke-miterlimit: 10;
       stroke: #06C755;
-      
-      /* --- แก้ไขใหม่: กำหนดสีรอไว้เลย แต่ซ่อนด้วย Opacity --- */
-      fill: #06C755;
-      fill-opacity: 0;
-      
+      fill: none; /* ไม่ต้อง Fill ที่ตัวนี้ */
       stroke-linecap: round;
-      animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards, fillGreenOpacity 0.4s ease-in-out 0.4s forwards;
+      animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+    }
+    /* วงกลมพื้นหลัง (Fill) - แยกออกมาต่างหาก */
+    .checkmark-fill {
+      fill: #06C755;
+      transform-origin: center;
+      transform: scale(0); /* เริ่มจาก 0 */
+      animation: fillScale 0.4s ease-in-out 0.4s forwards;
     }
     .checkmark-check {
       transform-origin: 50% 50%;
@@ -120,10 +124,9 @@
     @keyframes stroke {
       100% { stroke-dashoffset: 0; }
     }
-    
-    /* --- แก้ไขใหม่: Animation ปรับความชัดของสีพื้นหลัง --- */
-    @keyframes fillGreenOpacity {
-      100% { fill-opacity: 1; }
+    /* Animation ขยายวงกลมพื้นหลัง */
+    @keyframes fillScale {
+      to { transform: scale(1); }
     }
   </style>
 </head>
@@ -296,8 +299,13 @@
     <!-- Premium SVG Animation -->
     <div class="checkmark-wrapper">
       <svg class="checkmark-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-        <!-- ใช้ r=23 เพื่อป้องกันขอบตัดในมือถือ -->
+        <!-- 1. วงกลมพื้นหลัง (Fill) -->
+        <circle class="checkmark-fill" cx="26" cy="26" r="23" />
+        
+        <!-- 2. วงกลมขอบ (Outline) -->
         <circle class="checkmark-circle" cx="26" cy="26" r="23" fill="none"/>
+        
+        <!-- 3. เครื่องหมายถูก (Tick) -->
         <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
       </svg>
     </div>
@@ -589,7 +597,8 @@
           body: JSON.stringify({ 
             action: 'uploadSlip', 
             rowid: globalRowID, 
-            base64: base64 
+            base64: base64,
+            isRetry: true  // ✅ เพิ่ม flag นี้เพื่อให้ Backend รู้ว่าต้องส่ง Flex ใหม่
           })
         })
         .then(res => res.json())
@@ -600,13 +609,16 @@
           } else {
             alert("เกิดข้อผิดพลาด: " + res.message);
             btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-check-circle"></i> ยืนยันการชำระเงิน';
+            // ✅ แก้ไข: คืนค่าปุ่มให้กดใหม่ได้เมื่อ Error จาก Server
+            btn.innerHTML = '<i class="fas fa-redo"></i> อัปโหลดอีกครั้ง'; 
           }
         })
         .catch(err => {
           document.getElementById('loading').style.display = 'none';
           alert("Connection Error: " + err.message);
           btn.disabled = false;
+          // ✅ แก้ไข: คืนค่าปุ่มให้กดใหม่ได้เมื่อ Connection Error
+          btn.innerHTML = '<i class="fas fa-redo"></i> อัปโหลดอีกครั้ง';
         });
       };
       reader.readAsDataURL(file);
