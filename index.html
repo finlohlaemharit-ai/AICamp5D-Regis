@@ -7,17 +7,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    /* ... (CSS ส่วนเดิม คงไว้ทั้งหมด) ... */
+    /* CSS รวมทุกหน้า */
     body { font-family: "Prompt", sans-serif; background: #F0F6FF; color: #003B8E; margin: 0; padding-bottom: 40px; }
     .container { max-width: 550px; margin: auto; padding: 20px; box-sizing: border-box; }
+    
+    /* Banner & Header */
     .banner { width: 100%; border-radius: 16px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,59,142,0.2); background: linear-gradient(135deg, #00C6FF, #0072FF); color: white; text-align: center; padding: 40px 20px; box-sizing: border-box; }
     .banner h1 { margin: 0; font-size: 26px; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.1); line-height: 1.3; }
     .banner p { margin: 8px 0 0; opacity: 0.95; font-size: 15px; font-weight: 300; }
     .logo-badge { background: rgba(255,255,255,0.25); padding: 6px 14px; border-radius: 20px; font-size: 13px; margin-bottom: 12px; display: inline-block; backdrop-filter: blur(5px); }
+    
+    /* Cards & Sections */
     .card { background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); margin-bottom: 20px; }
     .section-title { font-size: 18px; font-weight: 700; margin: 30px 0 12px; padding-left: 10px; border-left: 5px solid #00C6FF; line-height: 1; color: #003B8E; }
+    
+    /* Tech Badges */
     .tech-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 25px; }
     .tech-badge { background: white; border: 1px solid #E6F7FF; color: #0072FF; padding: 8px 14px; border-radius: 50px; font-size: 13px; font-weight: 500; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+    
+    /* Agenda */
     .agenda-toggle-btn { background: white; color: #003B8E; width: 100%; padding: 15px 20px; border: none; border-radius: 12px; font-family: "Prompt", sans-serif; font-size: 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: all 0.3s ease; margin-bottom: 25px; }
     .agenda-toggle-btn:hover { background: #f9fcff; box-shadow: 0 6px 15px rgba(0,0,0,0.08); }
     .agenda-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; background: white; border-radius: 0 0 12px 12px; margin-top: -30px; margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); position: relative; z-index: 1; }
@@ -26,11 +34,15 @@
     .agenda-list li { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed #eee; font-size: 14px; display: flex; align-items: flex-start; }
     .agenda-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
     .day-badge { background: #E6F7FF; color: #0072FF; font-weight: 700; padding: 2px 8px; border-radius: 6px; margin-right: 10px; font-size: 12px; min-width: 45px; text-align: center; }
+
+    /* Stats */
     .stats-row { margin-bottom: 14px; }
     .stats-label { font-size: 14px; margin-bottom: 6px; display: flex; justify-content: space-between; color: #444; }
     .stat-max { color: #FF0000 !important; font-weight: 800 !important; font-size: 16px !important; }
     .progress-bg { background: #E1E8F5; height: 12px; border-radius: 6px; overflow: hidden; }
     .progress-fill { background: linear-gradient(90deg, #00C6FF, #0072FF); height: 100%; width: 0%; transition: width 1s ease; border-radius: 6px; }
+
+    /* Form Inputs */
     .choice-group { display: flex; flex-direction: column; gap: 12px; }
     .choice-btn { border: 2px solid #E1E8F5; padding: 18px; border-radius: 14px; background: white; cursor: pointer; text-align: left; transition: all 0.2s; position: relative; }
     .choice-btn:hover { border-color: #00C6FF; }
@@ -43,8 +55,11 @@
     .required { color: #FF4D4F; margin-left: 4px; font-size: 16px; }
     input, select { width: 100%; padding: 16px; border: 1px solid #E1E8F5; border-radius: 12px; font-size: 16px; font-family: "Prompt"; background: #FAFCFF; box-sizing: border-box; outline: none; transition: 0.3s; color: #333; }
     input:focus, select:focus { border-color: #0072FF; background: white; box-shadow: 0 0 0 3px rgba(0,114,255,0.1); }
+    
     .submit-btn { width: 100%; background: linear-gradient(90deg, #0072FF, #00C6FF); color: white; border: none; padding: 18px; font-size: 18px; font-weight: 700; border-radius: 50px; cursor: pointer; box-shadow: 0 8px 25px rgba(0,114,255,0.35); margin-top: 15px; transition: transform 0.2s; }
     .submit-btn:active { transform: scale(0.98); }
+    
+    /* Payment Tier Styles */
     .tier-container { background: #fff; border: 1px solid #E1E8F5; border-radius: 16px; overflow: hidden; margin-bottom: 25px; text-align: left; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
     .tier-item { padding: 15px 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; font-size: 15px; color: #888; position: relative; transition: all 0.3s; }
     .tier-item:last-child { border-bottom: none; }
@@ -53,26 +68,47 @@
     .tier-item.sold-out span:first-child { text-decoration: line-through; }
     .badge-stock { background: linear-gradient(135deg, #FF4D4F, #FF7875); color: white; font-size: 12px; padding: 4px 10px; border-radius: 20px; margin-left: 8px; font-weight: 600; display: inline-block; vertical-align: middle; animation: pulse 2s infinite; }
     .badge-sold { background: #999; color: white; font-size: 11px; padding: 3px 8px; border-radius: 4px; margin-left: 8px; display: inline-block; font-weight: 500; }
+    
     .price-box { background: linear-gradient(135deg, #00C6FF, #0072FF); color: white; padding: 25px 20px; border-radius: 16px; margin-bottom: 25px; margin-top: 15px; box-shadow: 0 8px 20px rgba(0,114,255,0.25); position: relative; overflow: hidden; text-align: center; }
     .price-val { font-size: 48px; font-weight: 800; line-height: 1; }
+    
     .qr-frame { border: 3px solid #E1E8F5; border-radius: 20px; padding: 15px; display: inline-block; margin-bottom: 20px; background: white; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: relative; text-align: center; }
     .qr-img { width: 100%; max-width: 260px; border-radius: 12px; display: block; }
+
+    /* Upload Button */
     .upload-btn-wrapper { position: relative; overflow: hidden; display: inline-block; width: 100%; margin-top: 15px; }
     .btn-select { border: 2px dashed #0072FF; color: #0072FF; background-color: #F0F9FF; padding: 15px 20px; border-radius: 12px; font-weight: 600; width: 100%; cursor: pointer; transition: 0.2s; font-size: 16px; }
     .upload-btn-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%; width: 100%; }
     #preview { margin-top: 20px; max-width: 100%; border-radius: 12px; display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #eee; }
+
+    /* Success Page Styles (Animated Checkmark) */
+    .icon-circle { width: 80px; height: 80px; background: #06C755; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; position: relative; animation: scaleUp 0.6s ease-in-out forwards; box-shadow: 0 0 0 10px rgba(6, 199, 85, 0.1); }
+    @keyframes scaleUp { 0% { transform: scale(0); opacity: 0; } 80% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); } }
+    @keyframes checkmarkSlide { 0% { width: 0; height: 0; opacity: 0; } 80% { width: 25px; height: 50px; opacity: 1; } 100% { width: 25px; height: 50px; opacity: 1; } }
+    .checkmark::after { content: ''; display: block; width: 25px; height: 50px; border: solid white; border-width: 0 6px 6px 0; transform: rotate(45deg); position: absolute; top: 10px; left: 28px; animation: checkmarkSlide 0.4s 0.3s ease-in-out forwards; opacity: 0; }
     
     .line-btn { display: block; width: 100%; text-decoration: none; padding: 15px 0; border-radius: 50px; font-weight: bold; margin-bottom: 10px; transition: transform 0.2s; cursor: pointer; text-align: center; }
     .btn-main { background: #06C755; color: white; box-shadow: 0 4px 15px rgba(6,199,85,0.3); }
     .btn-sec { background: white; color: #003B8E; border: 2px solid #003B8E; }
+
+    /* Helper Classes */
     .hidden { display: none !important; }
+    
+    /* Loading */
     #loading { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.95); z-index:999; flex-direction:column; justify-content:center; align-items:center; }
     .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #0072FF; border-radius: 50%; width: 45px; height: 45px; animation: spin 0.8s linear infinite; margin-bottom: 20px; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    /* --- Custom Modal --- */
-    #custom-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(3px); }
-    .custom-modal { background: white; width: 90%; max-width: 400px; padding: 30px 25px; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: popIn 0.3s ease; }
+    /* --- Custom Modal Styles --- */
+    #custom-modal-overlay {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5); z-index: 2000; justify-content: center; align-items: center;
+      backdrop-filter: blur(3px);
+    }
+    .custom-modal {
+      background: white; width: 90%; max-width: 400px; padding: 30px 25px; border-radius: 20px;
+      text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: popIn 0.3s ease;
+    }
     @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
     .modal-icon { font-size: 50px; margin-bottom: 15px; }
     .modal-title { font-size: 20px; font-weight: bold; margin-bottom: 10px; color: #003B8E; }
@@ -193,7 +229,7 @@
     <div class="section-title" id="section-day">📅 เลือกวันเรียน <span class="required">*</span></div>
     <div class="choice-group" style="margin-bottom: 20px;">
       <div class="choice-btn" onclick="selectDay('A', this)"><span class="choice-title">A) 8–12 มกราคม 2568</span><span class="choice-desc">วันพุธ – อาทิตย์</span></div>
-      <div class="choice-btn" onclick="selectDay('B', this)"><span class="title">B) 13–17 มกราคม 2568</span><span class="choice-desc">วันจันทร์ – ศุกร์</span></div>
+      <div class="choice-btn" onclick="selectDay('B', this)"><span class="choice-title">B) 13–17 มกราคม 2568</span><span class="choice-desc">วันจันทร์ – ศุกร์</span></div>
     </div>
 
     <div class="section-title" id="section-time">⏰ เลือกเวลาเรียน <span class="required">*</span></div>
