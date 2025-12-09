@@ -185,11 +185,11 @@
     <div class="card">
       <div class="section-title" style="margin-top:0;">📊 สถิติการเลือกเรียน (Real-time)</div>
       
-      <!-- ใส่ icon หมุนรอไว้ใน HTML เริ่มต้น -->
+      <!-- ใส่ icon หมุนรอไว้ใน HTML เริ่มต้น (แก้ไขสีเป็น #0072FF) -->
       <div class="stats-row">
         <div class="stats-label">
           <span>8–12 ม.ค.</span> 
-          <span id="txt-dayA"><i class="fas fa-circle-notch fa-spin" style="font-size:14px; color:#ccc;"></i></span>
+          <span id="txt-dayA"><i class="fas fa-circle-notch fa-spin" style="font-size:14px; color:#0072FF;"></i></span>
         </div>
         <div class="progress-bg"><div class="progress-fill" id="bar-dayA"></div></div>
       </div>
@@ -197,7 +197,7 @@
       <div class="stats-row">
         <div class="stats-label">
           <span>13–17 ม.ค.</span> 
-          <span id="txt-dayB"><i class="fas fa-circle-notch fa-spin" style="font-size:14px; color:#ccc;"></i></span>
+          <span id="txt-dayB"><i class="fas fa-circle-notch fa-spin" style="font-size:14px; color:#0072FF;"></i></span>
         </div>
         <div class="progress-bg"><div class="progress-fill" id="bar-dayB"></div></div>
       </div>
@@ -207,7 +207,7 @@
       <div class="stats-row">
         <div class="stats-label">
           <span>19:00 - 21:00</span> 
-          <span id="txt-time1"><i class="fas fa-circle-notch fa-spin" style="font-size:14px; color:#ccc;"></i></span>
+          <span id="txt-time1"><i class="fas fa-circle-notch fa-spin" style="font-size:14px; color:#0072FF;"></i></span>
         </div>
         <div class="progress-bg"><div class="progress-fill" id="bar-time1"></div></div>
       </div>
@@ -215,16 +215,16 @@
       <div class="stats-row">
         <div class="stats-label">
           <span>20:00 - 22:00</span> 
-          <span id="txt-time2"><i class="fas fa-circle-notch fa-spin" style="font-size:14px; color:#ccc;"></i></span>
+          <span id="txt-time2"><i class="fas fa-circle-notch fa-spin" style="font-size:14px; color:#0072FF;"></i></span>
         </div>
         <div class="progress-bg"><div class="progress-fill" id="bar-time2"></div></div>
       </div>
       
-      <!-- ⚠️ ปรับปรุงใหม่: ใช้ Flexbox Wrap เพื่อป้องกันการล้น และขยายตัวเลข -->
+      <!-- ใช้ Flexbox Wrap เพื่อป้องกันการล้น และขยายตัวเลข -->
       <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 6px; color: #888; margin-top: 15px; background: #f9f9f9; padding: 12px; border-radius: 8px; font-size: 14px;">
         <span>ผู้ลงทะเบียนแล้วทั้งหมด:</span>
         <b id="total-reg" style="color: #003B8E; font-size: 26px; font-weight: 800; line-height: 1;">
-          <i class="fas fa-circle-notch fa-spin" style="font-size: 20px; color: #ccc;"></i>
+          <i class="fas fa-circle-notch fa-spin" style="font-size: 20px; color: #0072FF;"></i>
         </b> 
         <span>ท่าน</span>
       </div>
@@ -619,7 +619,7 @@
           img.src = event.target.result;
           img.onload = () => {
             const canvas = document.createElement('canvas');
-            const maxWidth = 800; // Resize to 800px max width
+            const maxWidth = 500; // ⚠️ ลดจาก 600 เป็น 500 เพื่อให้ไฟล์เล็กลงอีก
             let width = img.width;
             let height = img.height;
 
@@ -633,8 +633,8 @@
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, width, height);
             
-            // Compress to JPEG 0.7 quality
-            resolve(canvas.toDataURL('image/jpeg', 0.7).split(',')[1]);
+            // ⚠️ ลดคุณภาพจาก 0.5 เป็น 0.4 เพื่อให้ไฟล์เล็กที่สุด
+            resolve(canvas.toDataURL('image/jpeg', 0.4).split(',')[1]);
           };
           img.onerror = error => reject(error);
         };
@@ -651,6 +651,11 @@
       btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังอัปโหลด...';
       document.getElementById('loading').style.display = 'flex';
 
+      // --- สร้าง AbortController เพื่อขยายเวลา Timeout ---
+      const controller = new AbortController();
+      // ตั้งเวลา 3 นาที (180,000 ms) ก่อนที่จะตัดการเชื่อมต่อ
+      const timeoutId = setTimeout(() => controller.abort(), 180000);
+
       try {
         if (!globalRowID) {
             throw new Error("Session Expired (RowID missing). Please register again.");
@@ -662,6 +667,8 @@
         // Send to GAS
         const res = await fetch(WEB_APP_URL, {
           method: 'POST',
+          // แนบ signal เพื่อควบคุม timeout
+          signal: controller.signal,
           body: JSON.stringify({ 
             action: 'uploadSlip', 
             rowid: globalRowID, 
@@ -669,6 +676,9 @@
             isRetry: true // flag สำหรับบังคับส่ง Flex (ถ้า backend รองรับ)
           })
         }).then(r => r.json());
+
+        // เมื่อทำงานเสร็จให้เคลียร์ timeout
+        clearTimeout(timeoutId);
 
         document.getElementById('loading').style.display = 'none';
         
@@ -681,12 +691,19 @@
         }
 
       } catch (err) {
+        clearTimeout(timeoutId); // เคลียร์ timeout เมื่อ error
         document.getElementById('loading').style.display = 'none';
-        alert("Connection Error: " + err.message);
+        
+        if (err.name === 'AbortError') {
+             alert("ใช้เวลานานเกินไป (Timeout) กรุณาลองใหม่อีกครั้ง หรือใช้อินเทอร์เน็ตที่เสถียรขึ้น");
+        } else {
+             alert("Connection Error: " + err.message);
+        }
+        
         btn.disabled = false;
         btn.innerHTML = '<i class="fas fa-redo"></i> อัปโหลดอีกครั้ง';
         
-        if (err.message.includes("Session")) location.reload();
+        if (err.message && err.message.includes("Session")) location.reload();
       }
     }
   </script>
