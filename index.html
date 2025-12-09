@@ -7,7 +7,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    /* ... (CSS ส่วนเดิม คงไว้ทั้งหมด) ... */
     body { font-family: "Prompt", sans-serif; background: #F0F6FF; color: #003B8E; margin: 0; padding-bottom: 40px; }
     .container { max-width: 550px; margin: auto; padding: 20px; box-sizing: border-box; }
     .banner { width: 100%; border-radius: 16px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,59,142,0.2); background: linear-gradient(135deg, #00C6FF, #0072FF); color: white; text-align: center; padding: 40px 20px; box-sizing: border-box; }
@@ -61,7 +60,7 @@
     .btn-select { border: 2px dashed #0072FF; color: #0072FF; background-color: #F0F9FF; padding: 15px 20px; border-radius: 12px; font-weight: 600; width: 100%; cursor: pointer; transition: 0.2s; font-size: 16px; }
     .upload-btn-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%; width: 100%; }
     #preview { margin-top: 20px; max-width: 100%; border-radius: 12px; display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #eee; }
-    
+     
     .line-btn { display: block; width: 100%; text-decoration: none; padding: 15px 0; border-radius: 50px; font-weight: bold; margin-bottom: 10px; transition: transform 0.2s; cursor: pointer; text-align: center; }
     .btn-main { background: #06C755; color: white; box-shadow: 0 4px 15px rgba(6,199,85,0.3); }
     .btn-sec { background: white; color: #003B8E; border: 2px solid #003B8E; }
@@ -178,7 +177,13 @@
       <div style="margin: 20px 0; border-top: 1px dashed #E1E8F5;"></div>
       <div class="stats-row"><div class="stats-label"><span>19:00 - 21:00</span> <span id="txt-time1">0%</span></div><div class="progress-bg"><div class="progress-fill" id="bar-time1"></div></div></div>
       <div class="stats-row"><div class="stats-label"><span>20:00 - 22:00</span> <span id="txt-time2">0%</span></div><div class="progress-bg"><div class="progress-fill" id="bar-time2"></div></div></div>
-      <div style="text-align: center; font-size: 13px; color: #888; margin-top: 15px; background: #f9f9f9; padding: 8px; border-radius: 8px;">ผู้ลงทะเบียนแล้วทั้งหมด: <b id="total-reg" style="color: #003B8E;">...</b> ท่าน</div>
+      
+      <div style="text-align: center; font-size: 13px; color: #888; margin-top: 15px; background: #f9f9f9; padding: 10px; border-radius: 8px;">
+        ผู้ลงทะเบียนแล้วทั้งหมด: <b id="total-reg" style="color: #003B8E;">...</b> ท่าน
+      </div>
+      <div style="text-align: center; color: #FF0000; font-weight: 500; font-size: 12px; margin-top: 10px;">
+        *หมายเหตุ: คอร์สจะจัดตามช่วงวันและเวลาที่คนเลือกมากที่สุด
+      </div>
     </div>
 
     <!-- 4. Form Inputs -->
@@ -289,7 +294,7 @@
 
     <h2 style="color:#003B8E; margin-bottom:10px;">ลงทะเบียนสำเร็จ!</h2>
     <p style="color:#666; font-size:14px; margin-bottom:30px;">ระบบได้รับข้อมูลและสลิปเรียบร้อยแล้ว<br>กรุณากดปุ่มด้านล่างเพื่อเข้ากลุ่มเรียน</p>
-    
+     
     <a href="https://line.me/ti/g/fmMXxuHaw-" class="line-btn btn-main" target="_blank">
       เข้ากลุ่มไลน์ (Click)
     </a>
@@ -317,7 +322,7 @@
         .then(res => res.json())
         .then(renderStats)
         .catch(err => console.warn("Stats load error:", err));
-      
+       
       fetch(WEB_APP_URL + "?action=getConfig")
         .then(res => res.json())
         .then(data => { globalConfig = data; })
@@ -329,7 +334,7 @@
       document.getElementById('step-register').classList.add('hidden');
       document.getElementById('step-payment').classList.add('hidden');
       document.getElementById('step-success').classList.add('hidden');
-      
+       
       document.getElementById(stepId).classList.remove('hidden');
       window.scrollTo(0, 0);
     }
@@ -370,9 +375,16 @@
       updateBar("bar-time1", "txt-time1", stats.time1, stats.total);
       updateBar("bar-time2", "txt-time2", stats.time2, stats.total);
       
+      // Reset classes
       ['txt-dayA', 'txt-dayB', 'txt-time1', 'txt-time2'].forEach(id => document.getElementById(id).classList.remove('stat-max'));
+
+      // Highlight Max Day
       if (stats.dayA > stats.dayB) document.getElementById('txt-dayA').classList.add('stat-max');
       else if (stats.dayB > stats.dayA) document.getElementById('txt-dayB').classList.add('stat-max');
+
+      // Highlight Max Time (New Logic)
+      if (stats.time1 > stats.time2) document.getElementById('txt-time1').classList.add('stat-max');
+      else if (stats.time2 > stats.time1) document.getElementById('txt-time2').classList.add('stat-max');
     }
 
     function updateBar(barId, txtId, val, total) {
@@ -450,7 +462,7 @@
       if(document.getElementById('position').value === 'อื่นๆ' && !otherPositionValue) { alert("⚠️ ระบุตำแหน่งของคุณ"); document.getElementById('other_position').focus(); return; }
 
       document.getElementById('loading').style.display = 'flex';
-      
+       
       fetch(WEB_APP_URL, {
         method: 'POST',
         body: JSON.stringify({ action: 'register', form: form, forceUpdate: isForceUpdate }),
@@ -504,7 +516,7 @@
       const tSuper = document.getElementById('tier-super');
       const tEarly = document.getElementById('tier-early');
       const tNormal = document.getElementById('tier-normal');
-      
+       
       [tSuper, tEarly, tNormal].forEach(el => el.className = 'tier-item future');
 
       if (paid < cfg.superLimit) {
@@ -531,7 +543,7 @@
       const preview = document.getElementById('preview');
       const btn = document.getElementById('btnConfirm');
       const btnSelect = document.getElementById('btnSelect');
-      
+       
       const reader = new FileReader();
       reader.onloadend = function() {
         preview.src = reader.result;
