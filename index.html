@@ -60,7 +60,7 @@
     .btn-select { border: 2px dashed #0072FF; color: #0072FF; background-color: #F0F9FF; padding: 15px 20px; border-radius: 12px; font-weight: 600; width: 100%; cursor: pointer; transition: 0.2s; font-size: 16px; }
     .upload-btn-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%; width: 100%; }
     #preview { margin-top: 20px; max-width: 100%; border-radius: 12px; display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #eee; }
-     
+      
     .line-btn { display: block; width: 100%; text-decoration: none; padding: 15px 0; border-radius: 50px; font-weight: bold; margin-bottom: 10px; transition: transform 0.2s; cursor: pointer; text-align: center; }
     .btn-main { background: #06C755; color: white; box-shadow: 0 4px 15px rgba(6,199,85,0.3); }
     .btn-sec { background: white; color: #003B8E; border: 2px solid #003B8E; }
@@ -120,7 +120,7 @@
       stroke-linecap: round;
       animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
     }
-    
+     
     @keyframes stroke {
       100% { stroke-dashoffset: 0; }
     }
@@ -184,7 +184,7 @@
     <!-- 3. Stats -->
     <div class="card">
       <div class="section-title" style="margin-top:0;">📊 สถิติการเลือกเรียน (Real-time)</div>
-      
+       
       <!-- ใส่ icon หมุนรอไว้ใน HTML เริ่มต้น (แก้ไขสีเป็น #0072FF) -->
       <div class="stats-row">
         <div class="stats-label">
@@ -193,7 +193,7 @@
         </div>
         <div class="progress-bg"><div class="progress-fill" id="bar-dayA"></div></div>
       </div>
-      
+       
       <div class="stats-row">
         <div class="stats-label">
           <span>12–16 ม.ค.</span> 
@@ -201,9 +201,9 @@
         </div>
         <div class="progress-bg"><div class="progress-fill" id="bar-dayB"></div></div>
       </div>
-      
+       
       <div style="margin: 20px 0; border-top: 1px dashed #E1E8F5;"></div>
-      
+       
       <div class="stats-row">
         <div class="stats-label">
           <span>19:00 - 21:00</span> 
@@ -211,7 +211,7 @@
         </div>
         <div class="progress-bg"><div class="progress-fill" id="bar-time1"></div></div>
       </div>
-      
+       
       <div class="stats-row">
         <div class="stats-label">
           <span>20:00 - 22:00</span> 
@@ -219,7 +219,7 @@
         </div>
         <div class="progress-bg"><div class="progress-fill" id="bar-time2"></div></div>
       </div>
-      
+       
       <!-- ใช้ Flexbox Wrap เพื่อป้องกันการล้น และขยายตัวเลข -->
       <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 6px; color: #888; margin-top: 15px; background: #f9f9f9; padding: 12px; border-radius: 8px; font-size: 14px;">
         <span>ผู้ลงทะเบียนแล้วทั้งหมด:</span>
@@ -348,7 +348,7 @@
 
     <h2 style="color:#003B8E; margin-bottom:10px;">ลงทะเบียนสำเร็จ!</h2>
     <p style="color:#666; font-size:14px; margin-bottom:30px;">ระบบได้รับข้อมูลและสลิปเรียบร้อยแล้ว<br>กรุณากดปุ่มด้านล่างเพื่อเข้ากลุ่มเรียน</p>
-     
+      
     <a href="https://line.me/ti/g/fmMXxuHaw-" class="line-btn btn-main" target="_blank">
       เข้ากลุ่มไลน์ (Click)
     </a>
@@ -362,7 +362,7 @@
   <script>
     // ⚠️ 1. Deploy GAS เป็น Web App (เลือก Anyone)
     // ⚠️ 2. นำ URL มาใส่ตรงนี้
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxgWNubDDRevspD7gTPeS7xPVm8Zt4wGlG81dJYWP0c_4eg3A8qWyxjqbvUiFQFjhuFxQ/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzfVcrkDu8mGSaoF__xJ7ZOAa-LabUAytMRvdXw1rwMFvcCQjb2ioFhomBMVdRT_retCA/exec";
 
     // Global State
     let selectedData = { day: "", time: "" };
@@ -376,7 +376,7 @@
         .then(res => res.json())
         .then(renderStats)
         .catch(err => console.warn("Stats load error:", err));
-       
+        
       fetch(WEB_APP_URL + "?action=getConfig")
         .then(res => res.json())
         .then(data => { globalConfig = data; })
@@ -388,13 +388,14 @@
       document.getElementById('step-register').classList.add('hidden');
       document.getElementById('step-payment').classList.add('hidden');
       document.getElementById('step-success').classList.add('hidden');
-       
+        
       document.getElementById(stepId).classList.remove('hidden');
       window.scrollTo(0, 0);
     }
 
     // ----- STEP 1 LOGIC (REGISTER) -----
     function selectDay(val, el) {
+      // ⚠️ ยืนยันวันที่ 2569 ตามที่ต้องการ
       const mappedValue = val === 'A' ? '7–11 มกราคม 2569' : '12–16 มกราคม 2569';
       const group = el.closest('.choice-group');
       if (el.classList.contains('active')) { selectedData.day = ""; el.classList.remove('active'); } 
@@ -516,7 +517,7 @@
       if(document.getElementById('position').value === 'อื่นๆ' && !otherPositionValue) { alert("⚠️ ระบุตำแหน่งของคุณ"); document.getElementById('other_position').focus(); return; }
 
       document.getElementById('loading').style.display = 'flex';
-       
+        
       fetch(WEB_APP_URL, {
         method: 'POST',
         body: JSON.stringify({ action: 'register', form: form, forceUpdate: isForceUpdate }),
@@ -570,7 +571,7 @@
       const tSuper = document.getElementById('tier-super');
       const tEarly = document.getElementById('tier-early');
       const tNormal = document.getElementById('tier-normal');
-       
+        
       [tSuper, tEarly, tNormal].forEach(el => el.className = 'tier-item future');
 
       if (paid < cfg.superLimit) {
@@ -597,7 +598,7 @@
       const preview = document.getElementById('preview');
       const btn = document.getElementById('btnConfirm');
       const btnSelect = document.getElementById('btnSelect');
-       
+        
       const reader = new FileReader();
       reader.onloadend = function() {
         preview.src = reader.result;
@@ -632,7 +633,7 @@
             canvas.height = height;
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, width, height);
-            
+             
             // ⚠️ ลดคุณภาพจาก 0.5 เป็น 0.4 เพื่อให้ไฟล์เล็กที่สุด
             resolve(canvas.toDataURL('image/jpeg', 0.4).split(',')[1]);
           };
