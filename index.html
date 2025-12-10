@@ -7,7 +7,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    /* ✅ แก้ไข 1: เพิ่ม Global Box Sizing เพื่อป้องกันปัญหากรอบล้น */
     * { box-sizing: border-box; }
 
     body { font-family: "Prompt", sans-serif; background: #F0F6FF; color: #003B8E; margin: 0; padding-bottom: 40px; }
@@ -104,14 +103,18 @@
     /* Payment Choice Buttons */
     .pay-choice-btn { display: block; width: 100%; padding: 15px; margin-bottom: 10px; border-radius: 12px; border: 2px solid #E1E8F5; background: white; text-align: left; cursor: pointer; transition: 0.2s; position: relative; }
     .pay-choice-btn:hover { border-color: #0072FF; background: #F0F9FF; }
-    /* ใช้ Flexbox จัด title กับ badge */
     .pay-choice-title { font-weight: 700; color: #003B8E; font-size: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 5px; }
     .pay-choice-desc { font-size: 13px; color: #666; display: block; margin-top: 4px; }
-    /* ปรับ Badge ให้ไม่ลอย (Float) */
     .pay-choice-badge { background: #FF4D4F; color: white; font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: bold; box-shadow: 0 2px 5px rgba(255, 77, 79, 0.3); white-space: nowrap; }
     .pay-choice-btn.recommended { border: 2px solid #0072FF; background: #F4F9FF; box-shadow: 0 4px 10px rgba(0,114,255,0.15); }
 
-    /* ✅ แก้ไข 3: ปรับแต่งปุ่มในหน้า Success */
+    /* Table for Booking Details */
+    .detail-table { width: 100%; margin-bottom: 15px; font-size: 14px; text-align: left; border-collapse: collapse; }
+    .detail-table th { color: #888; font-weight: 500; padding: 5px 0; width: 40%; vertical-align: top;}
+    .detail-table td { color: #333; font-weight: 600; padding: 5px 0; text-align: right;}
+    .highlight-price { color: #0072FF !important; font-size: 16px; font-weight: 700 !important; }
+    .highlight-paid { color: #06C755 !important; }
+
     .line-btn { 
       display: flex; 
       justify-content: center; 
@@ -183,7 +186,6 @@
         </div>
     </div>
 
-    <!-- ... (Banner, Tech Grid, Agenda เหมือนเดิม) ... -->
     <div class="banner">
       <div class="logo-badge">Chokdee Content</div>
       <h1>AI Content Bootcamp</h1>
@@ -256,15 +258,14 @@
     <!-- Forms -->
     <div class="section-title" id="section-day">📅 เลือกวันเรียน <span class="required">*</span></div>
     <div class="choice-group" style="margin-bottom: 20px;">
-      <!-- ✅ เพิ่ม ID เพื่อรับค่าจาก GAS -->
-      <div class="choice-btn" onclick="selectDay('A', this)"><span class="choice-title" id="ui-day-a">กำลังโหลด...</span><span class="choice-desc" id="ui-desc-a">กำลังโหลด...</span></div>
-      <div class="choice-btn" onclick="selectDay('B', this)"><span class="choice-title" id="ui-day-b">กำลังโหลด...</span><span class="choice-desc" id="ui-desc-b">กำลังโหลด...</span></div>
+      <div class="choice-btn" id="btn-day-a" onclick="selectDay('A', this)"><span class="choice-title" id="ui-day-a">กำลังโหลด...</span><span class="choice-desc" id="ui-desc-a">กำลังโหลด...</span></div>
+      <div class="choice-btn" id="btn-day-b" onclick="selectDay('B', this)"><span class="choice-title" id="ui-day-b">กำลังโหลด...</span><span class="choice-desc" id="ui-desc-b">กำลังโหลด...</span></div>
     </div>
 
     <div class="section-title" id="section-time">⏰ เลือกเวลาเรียน <span class="required">*</span></div>
     <div class="choice-group">
-      <div class="choice-btn" onclick="selectTime('1', this)"><span class="choice-title" id="ui-time-1">กำลังโหลด...</span><span class="choice-desc">ระยะเวลา 2 ชั่วโมง</span></div>
-      <div class="choice-btn" onclick="selectTime('2', this)"><span class="choice-title" id="ui-time-2">กำลังโหลด...</span><span class="choice-desc">ระยะเวลา 2 ชั่วโมง</span></div>
+      <div class="choice-btn" id="btn-time-1" onclick="selectTime('1', this)"><span class="choice-title" id="ui-time-1">กำลังโหลด...</span><span class="choice-desc">ระยะเวลา 2 ชั่วโมง</span></div>
+      <div class="choice-btn" id="btn-time-2" onclick="selectTime('2', this)"><span class="choice-title" id="ui-time-2">กำลังโหลด...</span><span class="choice-desc">ระยะเวลา 2 ชั่วโมง</span></div>
     </div>
 
     <div class="section-title">📝 ข้อมูลผู้สมัคร</div>
@@ -286,7 +287,7 @@
       </div>
     </div>
 
-    <button class="submit-btn" onclick="submitForm()">สมัครเรียนทันที <i class="fas fa-arrow-right"></i></button>
+    <button class="submit-btn" id="btn-main-submit" onclick="submitForm()">สมัครเรียนทันที <i class="fas fa-arrow-right"></i></button>
   </div>
 
   <!-- STEP 2: PAYMENT -->
@@ -329,7 +330,6 @@
     <h2 style="color:#003B8E; margin-bottom:10px;">ดำเนินการสำเร็จ!</h2>
     <p style="color:#666; font-size:14px; margin-bottom:30px;" id="success-msg">ระบบได้รับข้อมูลเรียบร้อยแล้ว</p>
     
-    <!-- ✅ แก้ไข 4: ปรับ HTML ปุ่มให้รองรับ Style ใหม่ -->
     <a href="https://line.me/ti/g/fmMXxuHaw-" class="line-btn btn-main" target="_blank" id="btn-line-group">
       <i class="fab fa-line" style="font-size: 24px;"></i> เข้ากลุ่มไลน์ (Click)
     </a>
@@ -341,13 +341,14 @@
 
   <script>
     // ⚠️ นำ URL ใหม่จากการ Deploy มาใส่ที่นี่
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxacTxgLu0MwcVcW6YstXtlLfpu2qD59gpfcmG0MHftYUVw5P2JKosgcf4xO38PE4GFdA/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzx45b2N0sPma-bvI8f-uvyMVyFUtUCzHKY27k59pwsJJJ8J2PeaeI08UcWUwE1AFtP3A/exec";
 
     let selectedData = { day: "", time: "" };
     let globalRowID = null;
     let globalFullPrice = 0;
     let globalConfig = null;
     let currentPaymentType = 'full';
+    let isEditingMode = false; // Flag to check if user is editing
 
     window.onload = function() {
       fetch(WEB_APP_URL + "?action=getStats").then(res => res.json()).then(renderStats).catch(console.warn);
@@ -361,9 +362,9 @@
     function renderConfig(cfg) {
         if(!cfg) return;
         document.getElementById('ui-day-a').innerText = "A) " + cfg.labelDayA;
-        document.getElementById('ui-desc-a').innerText = cfg.descDayA; // ✅ แสดงผลรายละเอียดวัน A
+        document.getElementById('ui-desc-a').innerText = cfg.descDayA; 
         document.getElementById('ui-day-b').innerText = "B) " + cfg.labelDayB;
-        document.getElementById('ui-desc-b').innerText = cfg.descDayB; // ✅ แสดงผลรายละเอียดวัน B
+        document.getElementById('ui-desc-b').innerText = cfg.descDayB; 
         document.getElementById('ui-time-1').innerText = "⏰ " + cfg.labelTime1;
         document.getElementById('ui-time-2').innerText = "⏰ " + cfg.labelTime2;
         document.getElementById('lbl-stat-day-a').innerText = cfg.labelDayA;
@@ -441,7 +442,7 @@
             desc.innerHTML = 'ท่านสามารถเลือกชำระเต็มจำนวนเพื่อล็อคสิทธิ์ทันที <br>หรือชำระมัดจำก่อน';
             const fullPrice = extraData.price;
             const depositPrice = Math.ceil(fullPrice * 0.2);
-            // Updated Psychology: Recommend 100%
+            
             contentExtra.innerHTML = `
                 <div class="pay-choice-btn recommended" onclick="selectPaymentType('full', ${fullPrice}, ${fullPrice})">
                     <span class="pay-choice-title">ชำระเต็มจำนวน (100%) <span class="pay-choice-badge">แนะนำ! ล็อคที่นั่งชัวร์</span></span>
@@ -453,6 +454,47 @@
                 </div>`;
             const btnCancel = document.createElement('button'); btnCancel.className = 'modal-btn btn-cancel'; btnCancel.innerText = 'ยกเลิก'; btnCancel.onclick = function() { overlay.style.display = 'none'; }; actions.appendChild(btnCancel);
         } 
+        else if (type === 'booking_info_edit') {
+            // Modal สำหรับสถานะ Booking ที่เจอข้อมูลแล้ว
+            icon.innerHTML = '📋'; title.innerText = 'พบข้อมูลการจอง'; 
+            desc.innerHTML = 'ท่านมีการมัดจำไว้แล้ว กรุณาเลือกดำเนินการ';
+            
+            const d = extraData;
+            contentExtra.innerHTML = `
+                <table class="detail-table">
+                    <tr><th>ชื่อผู้สมัคร:</th><td>${d.fullname}</td></tr>
+                    <tr><th>เบอร์โทร:</th><td>${document.getElementById('search-phone').value || d.phone}</td></tr>
+                    <tr><th>ยอดทั้งหมด:</th><td>${d.fullPrice.toLocaleString()}</td></tr>
+                    <tr><th>มัดจำแล้ว:</th><td class="highlight-paid">-${d.paidAmount.toLocaleString()}</td></tr>
+                    <tr><th style="border-top:1px dashed #ddd; padding-top:8px;">คงเหลือ:</th><td style="border-top:1px dashed #ddd; padding-top:8px;" class="highlight-price">${d.remaining.toLocaleString()}</td></tr>
+                </table>
+            `;
+
+            // ปุ่มจ่ายส่วนที่เหลือ
+            const btnPay = document.createElement('button'); 
+            btnPay.className = 'modal-btn btn-confirm'; 
+            btnPay.innerHTML = '💰 ชำระส่วนที่เหลือ'; 
+            btnPay.onclick = function() { 
+                overlay.style.display = 'none';
+                currentPaymentType = 'remaining'; 
+                globalRowID = d.rowid; globalFullPrice = d.fullPrice;
+                setupPaymentPage(d.remaining); 
+                document.getElementById('pay-label').innerHTML = `ชำระส่วนที่เหลือ (จ่ายแล้ว ${d.paidAmount.toLocaleString()})`;
+                showStep('step-payment');
+            };
+
+            // ปุ่มแก้ไขข้อมูล
+            const btnEdit = document.createElement('button'); 
+            btnEdit.className = 'modal-btn btn-sec'; 
+            btnEdit.innerHTML = '✏️ แก้ไขข้อมูล'; 
+            btnEdit.onclick = function() { 
+                overlay.style.display = 'none';
+                editBookingData(d);
+            };
+
+            actions.appendChild(btnPay);
+            actions.appendChild(btnEdit);
+        }
         else if (type === 'existing_data_redirect') {
             icon.innerHTML = '⚠️'; title.innerText = 'พบข้อมูลในระบบ'; 
             desc.innerHTML = 'เบอร์โทรศัพท์นี้มีการลงทะเบียนแล้ว<br>กรุณาตรวจสอบสถานะเพื่อดำเนินการต่อ';
@@ -461,7 +503,6 @@
                 overlay.style.display = 'none'; 
                 document.getElementById('search-phone').value = extraData.phone;
                 window.scrollTo(0,0);
-                // Highlight search box
                 document.querySelector('.search-card').style.border = "2px solid #FF4D4F";
                 setTimeout(() => document.querySelector('.search-card').style.border = "none", 2000);
                 setTimeout(() => document.querySelector('.search-card').style.borderLeft = "6px solid #0072FF", 2000);
@@ -486,17 +527,70 @@
             document.getElementById('loading').style.display = 'none';
             if (res.status === "found") {
                 const d = res.data; globalRowID = d.rowid; globalFullPrice = d.fullPrice;
-                if (d.rowStatus === "Paid") showModal('duplicate_paid');
+                
+                if (d.rowStatus === "Paid") {
+                    showModal('duplicate_paid');
+                }
                 else if (d.rowStatus === "Booking") {
-                    currentPaymentType = 'remaining'; 
-                    // ใช้ยอด Remaining จริงจากระบบ
-                    setupPaymentPage(d.remaining); 
-                    showStep('step-payment');
-                    document.getElementById('pay-label').innerHTML = `ชำระส่วนที่เหลือ (จ่ายแล้ว ${d.paidAmount})`;
-                    alert(`✅ พบข้อมูลการจองของคุณ ${d.fullname}\nยอดคงเหลือที่ต้องชำระ: ${d.remaining} บาท`);
-                } else if (d.rowStatus === "Pending") showModal('payment_choice', null, { price: d.fullPrice });
+                    // แสดง Modal แบบใหม่ที่มีข้อมูลครบ
+                    showModal('booking_info_edit', null, d);
+                } 
+                else if (d.rowStatus === "Pending") {
+                    showModal('payment_choice', null, { price: d.fullPrice });
+                }
             } else showModal('not_found');
         }).catch(() => { document.getElementById('loading').style.display = 'none'; alert("Connection Error"); });
+    }
+
+    // ฟังก์ชันใหม่สำหรับนำข้อมูลมาใส่ในฟอร์มเพื่อแก้ไข
+    function editBookingData(data) {
+        isEditingMode = true; // Set flag
+        document.getElementById('btn-main-submit').innerHTML = '💾 บันทึกการแก้ไข';
+        document.getElementById('btn-main-submit').style.background = 'linear-gradient(90deg, #FF9900, #FFCC00)';
+
+        // Fill Text Inputs
+        document.getElementById('phone').value = document.getElementById('search-phone').value || ""; 
+        document.getElementById('fullname').value = data.fullname || "";
+        document.getElementById('email').value = data.email || "";
+        document.getElementById('lineid').value = data.lineid || "";
+        document.getElementById('branch').value = data.branch || "";
+        
+        // Fill Position
+        const posSelect = document.getElementById('position');
+        const posOptions = Array.from(posSelect.options).map(o => o.value);
+        if (posOptions.includes(data.position)) {
+            posSelect.value = data.position;
+            document.getElementById('other-position-group').style.display = 'none';
+        } else {
+            posSelect.value = 'อื่นๆ';
+            document.getElementById('other-position-group').style.display = 'block';
+            document.getElementById('other_position').value = data.position;
+        }
+
+        // Select Day
+        // data.day คาดว่าเป็น "รอบ A" หรือ "รอบ B" หรือข้อความเต็ม ต้องเทียบกับ config
+        // เพื่อความชัวร์ ใช้การเดาจาก text
+        document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active'));
+        
+        if (data.day.includes(globalConfig.config.labelDayA)) {
+            document.getElementById('btn-day-a').classList.add('active');
+            selectedData.day = globalConfig.config.labelDayA;
+        } else if (data.day.includes(globalConfig.config.labelDayB)) {
+            document.getElementById('btn-day-b').classList.add('active');
+            selectedData.day = globalConfig.config.labelDayB;
+        }
+
+        // Select Time
+        if (data.time.includes(globalConfig.config.labelTime1)) {
+            document.getElementById('btn-time-1').classList.add('active');
+            selectedData.time = globalConfig.config.labelTime1;
+        } else if (data.time.includes(globalConfig.config.labelTime2)) {
+            document.getElementById('btn-time-2').classList.add('active');
+            selectedData.time = globalConfig.config.labelTime2;
+        }
+
+        // Scroll to form
+        document.getElementById('section-day').scrollIntoView({ behavior: 'smooth' });
     }
 
     function selectPaymentType(type, amount, fullPrice) {
@@ -507,7 +601,10 @@
         showStep('step-payment');
     }
 
-    function submitForm(isForceUpdate = false) {
+    function submitForm() {
+      // isEditingMode คือตัวแปร global ที่เรา set ไว้ตอนกดแก้ไข (default false)
+      const isForceUpdate = isEditingMode; 
+
       // 1. Validate Day (ตรวจสอบวันเรียน)
       if (!selectedData.day) {
         alert("⚠️ กรุณาเลือก 'วันเรียน' ที่สะดวก");
@@ -605,6 +702,11 @@
         // Strict Check: ถ้าเจอข้อมูลซ้ำ ให้ไป Check Status อย่างเดียว
         if (res.status === "EXISTING_DATA") {
             showModal('existing_data_redirect', null, { phone: form.phone });
+        }
+        else if (res.status === "UPDATE_SUCCESS") {
+            // กรณีอัปเดตสำเร็จ ให้ไปหน้าตรวจสอบสถานะอีกครั้งเพื่อคำนวณยอดเงินคงเหลือใหม่
+            alert("บันทึกข้อมูลแก้ไขเรียบร้อยแล้ว");
+            checkStatus(); // เรียก checkStatus เพื่อดึงยอดล่าสุดมาโชว์ใน Modal Booking
         }
         else if (res.rowid) {
             globalRowID = res.rowid; globalFullPrice = res.price;
