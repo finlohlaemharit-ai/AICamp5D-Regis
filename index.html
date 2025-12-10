@@ -237,8 +237,8 @@
     <!-- 4. Form Inputs -->
     <div class="section-title" id="section-day">📅 เลือกวันเรียน <span class="required">*</span></div>
     <div class="choice-group" style="margin-bottom: 20px;">
-      <div class="choice-btn" onclick="selectDay('A', this)"><span class="choice-title">A) 8–12 มกราคม 2569</span><span class="choice-desc">วันพุธ – อาทิตย์</span></div>
-      <div class="choice-btn" onclick="selectDay('B', this)"><span class="choice-title">B) 13–17 มกราคม 2569</span><span class="choice-desc">วันจันทร์ – ศุกร์</span></div>
+      <div class="choice-btn" onclick="selectDay('A', this)"><span class="choice-title">A) 7–11 มกราคม 2569</span><span class="choice-desc">วันพุธ – อาทิตย์</span></div>
+      <div class="choice-btn" onclick="selectDay('B', this)"><span class="choice-title">B) 12–16 มกราคม 2569</span><span class="choice-desc">วันจันทร์ – ศุกร์</span></div>
     </div>
 
     <div class="section-title" id="section-time">⏰ เลือกเวลาเรียน <span class="required">*</span></div>
@@ -395,7 +395,7 @@
 
     // ----- STEP 1 LOGIC (REGISTER) -----
     function selectDay(val, el) {
-      const mappedValue = val === 'A' ? '8–12 มกราคม 2569' : '13–17 มกราคม 2569';
+      const mappedValue = val === 'A' ? '7–11 มกราคม 2569' : '12–16 มกราคม 2569';
       const group = el.closest('.choice-group');
       if (el.classList.contains('active')) { selectedData.day = ""; el.classList.remove('active'); } 
       else { group.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); selectedData.day = mappedValue; }
